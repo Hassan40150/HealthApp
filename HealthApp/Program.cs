@@ -17,6 +17,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 
 
+// Adding Cookie Setup
+
+builder.Services.AddAuthentication("MyCookieAuth")
+    .AddCookie("MyCookieAuth", options =>
+    {
+        options.LoginPath = "/Login/Index";
+        options.LogoutPath = "/Login/Logout";
+    });
+
+builder.Services.AddAuthorization();
+
 
 
 var app = builder.Build();
@@ -33,6 +44,15 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+
+
+// Cookies 
+app.UseAuthentication();
+app.UseAuthorization();
+
+
+
 
 app.UseAuthorization();
 

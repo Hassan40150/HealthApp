@@ -27,9 +27,24 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-                        </li>
+
+
+
+                        @if (User?.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <form asp-controller="Login" asp-action="Logout" method="get" style="display:inline;">
+                                <button type="submit" class="btn btn-link nav-link text-dark">Logout</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
+                        }
+
+
+
+
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Index">Register</a>
                         </li>
