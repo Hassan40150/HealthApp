@@ -17,6 +17,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 
 
+// Adding Cookie Setup
+
+builder.Services.AddAuthentication("MyCookieAuth")
+    .AddCookie("MyCookieAuth", options =>
+    {
+        options.LoginPath = "/Landing/Index";
+        options.LogoutPath = "/Login/Logout";
+    });
+
+builder.Services.AddAuthorization();
+
 
 
 var app = builder.Build();
@@ -34,10 +45,18 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
+
+// Cookies 
+app.UseAuthentication();
+
+
+
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Landing}/{action=Index}/{id?}");
 
 app.Run();

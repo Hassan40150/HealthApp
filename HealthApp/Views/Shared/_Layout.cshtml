@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="~/HealthApp.styles.css" asp-append-version="true" />
 </head>
 <body>
+
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -20,21 +22,51 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Landing" asp-action="Index">Landing</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+
+
+
+                        @if (User?.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <form asp-controller="Login" asp-action="Logout" method="get" style="display:inline;">
+                                <button type="submit" class="btn btn-link nav-link text-dark">Logout</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
+                        }
+
+
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Index">Register</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
+
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+
+
+
 
     <footer class="border-top footer text-muted">
         <div class="container">

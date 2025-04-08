@@ -1,10 +1,10 @@
-﻿namespace HealthApp.Models
-{
+﻿using System.ComponentModel.DataAnnotations;
 
-    public class Users
+
+namespace HealthApp.ViewModels
+{
+    public class RegisterViewModel
     {
-        [Key]
-        public int UserID { get; set; }
 
         public required string Name { get; set; }
 
@@ -12,6 +12,7 @@
 
         [EmailAddress]
         public required string Email { get; set; }
+
 
     }
 }
