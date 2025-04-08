@@ -23,6 +23,11 @@ namespace HealthApp.Controllers
             return View();
         }
 
+        //public IActionResult Register()
+        //{
+        //    return View("/Views/Register/Register.cshtml");
+        //}
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -30,6 +35,19 @@ namespace HealthApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+
+
+                //bool emailExists = await _context.Users.AnyAsync(u => u.Email == model.Email);
+
+                //if (emailExists)
+                //{
+                //    ModelState.AddModelError("Email", "That email is already registered.");
+                //    return View(model); // shows error message.
+                //}
+
+
+
                 var user = new Users
                 {
                     Name = model.Name,
@@ -45,7 +63,7 @@ namespace HealthApp.Controllers
                 return RedirectToAction("Index", "Dashboard");
             }
 
-            return View(model);
+            return View("Index", model);
         }
 
 
