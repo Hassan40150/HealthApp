@@ -1,4 +1,5 @@
 ﻿using System;
+using HealthApp.Helpers;
 using HealthApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,14 +33,16 @@ namespace HealthApp.Controllers
                 var user = new Users
                 {
                     Name = model.Name,
-                    Password = model.Password, // Consider hashing this in production
+                    // Password = model.Password,
+                    Password = PasswordHelper.HashPassword(model.Password),
+
                     Email = model.Email
                 };
 
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Index", "Home"); // or wherever you want to go after registering
+                return RedirectToAction("Index", "Dashboard");
             }
 
             return View(model);

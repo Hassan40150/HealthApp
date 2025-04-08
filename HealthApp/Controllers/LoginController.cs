@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using HealthApp.Data;
+using HealthApp.Helpers;
 
 namespace HealthApp.Controllers
 {
@@ -30,8 +31,10 @@ namespace HealthApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string email, string password)
         {
+            string hashedPassword = PasswordHelper.HashPassword(password);
+
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+                .FirstOrDefaultAsync(u => u.Email == email && u.Password == hashedPassword);
 
             if (user != null)
             {
@@ -39,6 +42,9 @@ namespace HealthApp.Controllers
             {
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
+
+
             };
 
                 var identity = new ClaimsIdentity(claims, "MyCookieAuth");
@@ -46,7 +52,7 @@ namespace HealthApp.Controllers
 
                 await HttpContext.SignInAsync("MyCookieAuth", principal);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
 
             ViewBag.Error = "Invalid credentials";
@@ -57,7 +63,7 @@ namespace HealthApp.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync("MyCookieAuth");
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("Index", "Landing");
         }
 
 
