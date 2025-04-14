@@ -21,6 +21,7 @@ namespace HealthApp.Models
         public int? GoalTimeline { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+
         public Users? User { get; set; }
 
         public UserProfiles()

@@ -300,6 +300,103 @@ namespace HealthApp.Controllers
         }
 
 
+        // GET: OnboardingWaterIntake
+        public IActionResult OnboardingWaterIntake()
+        {
+            var viewModel = new OnboardingWaterIntakeViewModel();
+            return View("OnboardingWaterIntake", viewModel);
+        }
+
+        // POST: OnboardingWaterIntake
+        [HttpPost]
+        public async Task<IActionResult> OnboardingWaterIntake(OnboardingWaterIntakeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdString, out int userId))
+            {
+                return Unauthorized();
+            }
+
+            var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
+            if (profile == null)
+            {
+                return RedirectToAction("OnboardingAge");
+            }
+
+            // === Step 1: Calculate total recommended water goal (mL) ===
+            float weight = profile.StartingWeight;
+            int baseGoal = (int)(weight * 35);
+
+            int activityBonus = profile.ActivityLevel.ToLower() switch
+            {
+                "moderate" => 300,
+                "high" => 500,
+                _ => 0
+            };
+
+            int recommendedGoal = baseGoal + activityBonus;
+
+            // === Step 2: Calculate actual user intake from drinks ===
+            var waterSources = new Dictionary<string, (int volumeMl, double contribution)>
+    {
+        { "Water", (250, 1.0) },
+        { "Soda", (330, 0.9) },
+        { "DietSoda", (330, 0.9) },
+        { "Juice", (250, 0.9) },
+        { "Coffee", (125, 0.95) },
+        { "Tea", (125, 0.95) },
+        { "Beer", (250, 0.92) },
+        { "Wine", (125, 0.85) },
+        { "SportsDrink", (500, 0.9) },
+        { "EnergyDrink", (250, 0.85) }
+    };
+
+            var drinkCounts = new Dictionary<string, int>
+    {
+        { "Water", model.Water },
+        { "Soda", model.Soda },
+        { "DietSoda", model.DietSoda },
+        { "Juice", model.Juice },
+        { "Coffee", model.Coffee },
+        { "Tea", model.Tea },
+        { "Beer", model.Beer },
+        { "Wine", model.Wine },
+        { "SportsDrink", model.SportsDrink },
+        { "EnergyDrink", model.EnergyDrink }
+    };
+
+            int totalEffectiveWaterMl = drinkCounts.Sum(d =>
+            {
+                var (volume, contribution) = waterSources[d.Key];
+                return (int)(d.Value * volume * contribution);
+            });
+
+            // === Step 3: Save both values to WaterGoals ===
+            var waterGoal = new WaterGoals
+            {
+                UserID = userId,
+                WaterGoalMl = recommendedGoal,
+                UserWaterIntake = totalEffectiveWaterMl,
+                SetByUser = false,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.WaterGoals.Add(waterGoal);
+
+            // Optional: pass intake for use in the summary view
+            TempData["ActualWaterIntake"] = totalEffectiveWaterMl;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("OnboardingCalculatedSummary");
+        }
+
+
 
     }
 }

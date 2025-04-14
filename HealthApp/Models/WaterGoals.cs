@@ -10,7 +10,9 @@ namespace HealthApp.Models
         [ForeignKey("Users")]
         public int UserID { get; set; }
 
-        public required float WaterGoalLiters { get; set; }
+        public required int WaterGoalMl { get; set; } // Total recommended intake
+        public int UserWaterIntake { get; set; } // Actual intake from drinks
+
         public required bool SetByUser { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

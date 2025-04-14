@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250414200654_InitialCreate")]
+    [Migration("20250414205524_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -199,8 +199,8 @@ namespace HealthApp.Migrations
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.Property<float>("WaterGoalLiters")
-                        .HasColumnType("float");
+                    b.Property<int>("WaterGoalMl")
+                        .HasColumnType("int");
 
                     b.HasKey("GoalID");
 

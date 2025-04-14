@@ -143,7 +143,7 @@ namespace HealthApp.Migrations
                     GoalID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    WaterGoalLiters = table.Column<float>(type: "float", nullable: false),
+                    WaterGoalMl = table.Column<int>(type: "int", nullable: false),
                     SetByUser = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
