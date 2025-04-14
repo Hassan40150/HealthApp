@@ -393,10 +393,89 @@ namespace HealthApp.Controllers
 
             await _context.SaveChangesAsync();
 
+
+            await FinalizeUserMetricsAsync(userId);
+
             return RedirectToAction("OnboardingCalculatedSummary");
         }
 
 
+        // POST: Final Calculations
+        private async Task FinalizeUserMetricsAsync(int userId)
+        {
+            var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
+            if (profile == null) return;
 
+            float heightMeters = profile.HeightCm / 100f;
+            float weight = profile.StartingWeight;
+
+            // === Calculate BMI ===
+            float bmi = weight / (heightMeters * heightMeters);
+
+            // === Calculate BMR (Mifflin-St Jeor) ===
+            float bmr = profile.Sex.ToLower() switch
+            {
+                "male" => 10 * weight + 6.25f * profile.HeightCm - 5 * profile.Age + 5,
+                "female" => 10 * weight + 6.25f * profile.HeightCm - 5 * profile.Age - 161,
+                _ => 10 * weight + 6.25f * profile.HeightCm - 5 * profile.Age
+            };
+
+            // === Calculate TDEE ===
+            float activityFactor = profile.ActivityLevel.ToLower() switch
+            {
+                "low" => 1.2f,
+                "occasional" => 1.375f,
+                "moderate" => 1.55f,
+                "high" => 1.725f,
+                _ => 1.2f
+            };
+
+            float tdee = bmr * activityFactor;
+
+            // === Estimate time to goal (days) ===
+            float weightDiff = Math.Abs(profile.GoalWeight - profile.StartingWeight);
+            int estimatedDays = 365; // default 12 months
+
+            // === Save to Metrics table ===
+            var metrics = new Metrics
+            {
+                UserID = userId,
+                BMI = (float)Math.Round(bmi, 1),
+                BMR = (int)Math.Round(bmr),
+                TDEE = (int)Math.Round(tdee),
+                EstimatedTimeToGoalDays = estimatedDays,
+                LastUpdated = DateTime.UtcNow
+            };
+            _context.Metrics.Add(metrics);
+
+            // === Calculate Calorie Goal ===
+            int calorieGoal = profile.GoalType.ToLower() switch
+            {
+                "lose" => (int)(tdee - 500),
+                "gain" => (int)(tdee + 300),
+                _ => (int)tdee
+            };
+
+            // === Save to CalorieGoals table ===
+            var calGoal = new CalorieGoals
+            {
+                UserID = userId,
+                CalorieGoal = calorieGoal,
+                SetByUser = false,
+                CreatedAt = DateTime.UtcNow
+            };
+            _context.CalorieGoals.Add(calGoal);
+
+            // === Save initial weight log ===
+            var weightLog = new WeightLogs
+            {
+                UserID = userId,
+                WeightKg = weight,
+                LogDate = DateTime.UtcNow
+            };
+            _context.WeightLogs.Add(weightLog);
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
