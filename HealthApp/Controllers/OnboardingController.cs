@@ -73,7 +73,9 @@ namespace HealthApp.Controllers
                     StartingWeight = 0f,
                     GoalWeight = 0f,
                     GoalType = "maintain",
-                    ActivityLevel = "unknown"
+                    ActivityLevel = "unknown",
+                    GoalTimeline = 12
+
                 };
                 _context.UserProfiles.Add(profile);
             }

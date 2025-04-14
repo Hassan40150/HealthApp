@@ -7,11 +7,33 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HealthApp.Migrations
 {
     /// <inheritdoc />
-    public partial class LogicDBsv2 : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    UserID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Password = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.UserID);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "CalorieGoals",
                 columns: table => new
@@ -99,7 +121,7 @@ namespace HealthApp.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ActivityLevel = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    GoalTimeline = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    GoalTimeline = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
@@ -240,6 +262,9 @@ namespace HealthApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "WeightLogs");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

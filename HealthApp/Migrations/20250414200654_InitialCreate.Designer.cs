@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250414010945_LogicDBsv4")]
-    partial class LogicDBsv4
+    [Migration("20250414200654_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,6 +107,54 @@ namespace HealthApp.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Metrics");
+                });
+
+            modelBuilder.Entity("HealthApp.Models.UserProfiles", b =>
+                {
+                    b.Property<int>("ProfileID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ProfileID"));
+
+                    b.Property<string>("ActivityLevel")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("GoalTimeline")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GoalType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<float>("GoalWeight")
+                        .HasColumnType("float");
+
+                    b.Property<float>("HeightCm")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<float>("StartingWeight")
+                        .HasColumnType("float");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProfileID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("UserProfiles");
                 });
 
             modelBuilder.Entity("HealthApp.Models.Users", b =>
@@ -232,6 +280,17 @@ namespace HealthApp.Migrations
                 });
 
             modelBuilder.Entity("HealthApp.Models.Metrics", b =>
+                {
+                    b.HasOne("HealthApp.Models.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HealthApp.Models.UserProfiles", b =>
                 {
                     b.HasOne("HealthApp.Models.Users", "User")
                         .WithMany()

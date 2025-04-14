@@ -18,7 +18,7 @@ namespace HealthApp.Models
         public required float GoalWeight { get; set; }
         public required string GoalType { get; set; } // lose, gain, maintain
         public required string ActivityLevel { get; set; }
-        public DateTime? GoalTimeline { get; set; }
+        public int? GoalTimeline { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public Users? User { get; set; }

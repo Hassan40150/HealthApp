@@ -124,8 +124,8 @@ namespace HealthApp.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime?>("GoalTimeline")
-                        .HasColumnType("datetime(6)");
+                    b.Property<int?>("GoalTimeline")
+                        .HasColumnType("int");
 
                     b.Property<string>("GoalType")
                         .IsRequired()
