@@ -126,6 +126,44 @@ namespace HealthApp.Controllers
             return RedirectToAction("OnboardingHeight");
         }
 
+        // GET: OnboardingHeight
+        public IActionResult OnboardingHeight()
+        {
+            var viewModel = new OnboardingHeightViewModel
+            {
+                HeightCm = 170 // Default slider position (optional)
+            };
+
+            return View("OnboardingHeight", viewModel);
+        }
+
+        // POST: OnboardingHeight
+        [HttpPost]
+        public async Task<IActionResult> OnboardingHeight(OnboardingHeightViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdString, out int userId))
+            {
+                return Unauthorized();
+            }
+
+            var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
+
+            if (profile == null)
+            {
+                return RedirectToAction("OnboardingAge"); // Fallback if profile isn't created
+            }
+
+            profile.HeightCm = model.HeightCm;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("OnboardingCurrentWeight");
+        }
 
 
 
