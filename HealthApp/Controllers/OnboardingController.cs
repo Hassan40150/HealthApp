@@ -1,4 +1,5 @@
-﻿using HealthApp.Models;
+﻿using HealthApp.Attributes;
+using HealthApp.Models;
 using HealthApp.ViewModels;
 using HealthApp.ViewModels.Onboarding;
 using Microsoft.AspNetCore.Authorization;
@@ -20,18 +21,21 @@ namespace HealthApp.Controllers
             _context = context;
         }
 
-
+        [OnboardingRequired]
 
         public IActionResult OnboardingWelcome() // 1
         {
             return View("OnboardingWelcome");
         }
 
+        [OnboardingRequired]
+
         public IActionResult OnboardingTrackIntro() // 2
         {
             return View("OnboardingTrackIntro");
         }
 
+        [OnboardingRequired]
 
         public IActionResult OnboardingSetupIntro() // 3
         {
@@ -40,6 +44,8 @@ namespace HealthApp.Controllers
 
 
         // GET: OnboardingAge
+        [OnboardingRequired]
+
         public IActionResult OnboardingAge() // 4
         {
             return View("OnboardingAge");
@@ -91,6 +97,8 @@ namespace HealthApp.Controllers
 
 
         // GET: OnboardingGender
+        [OnboardingRequired]
+
         public IActionResult OnboardingGender() // 5
         {
             return View("OnboardingGender");
@@ -129,6 +137,8 @@ namespace HealthApp.Controllers
         }
 
         // GET: OnboardingHeight
+        [OnboardingRequired]
+
         public IActionResult OnboardingHeight() // 6
         {
             var viewModel = new OnboardingHeightViewModel
@@ -169,6 +179,8 @@ namespace HealthApp.Controllers
 
 
         // GET: OnboardingCurrentWeight
+        [OnboardingRequired]
+
         public IActionResult OnboardingCurrentWeight() // 7
         {
             var viewModel = new OnboardingCurrentWeightViewModel
@@ -209,6 +221,8 @@ namespace HealthApp.Controllers
 
 
         // GET: OnboardingGoalWeight
+        [OnboardingRequired]
+
         public IActionResult OnboardingGoalWeight()
         {
             var viewModel = new OnboardingGoalWeightViewModel
@@ -258,6 +272,8 @@ namespace HealthApp.Controllers
 
 
         // GET: OnboardingActivityLevel
+        [OnboardingRequired]
+
         public IActionResult OnboardingActivityLevel()
         {
             var viewModel = new OnboardingActivityLevelViewModel
@@ -301,6 +317,8 @@ namespace HealthApp.Controllers
 
 
         // GET: OnboardingWaterIntake
+        [OnboardingRequired]
+
         public IActionResult OnboardingWaterIntake()
         {
             var viewModel = new OnboardingWaterIntakeViewModel();
@@ -400,7 +418,7 @@ namespace HealthApp.Controllers
         }
 
 
-        // POST: Final Calculations
+        // Final Calculations
         private async Task FinalizeUserMetricsAsync(int userId)
         {
             var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
@@ -480,6 +498,8 @@ namespace HealthApp.Controllers
 
 
         // GET: OnboardingWalkthrough1
+        [OnboardingRequired]
+
         public IActionResult OnboardingWalkthrough1()
         {
             return View("OnboardingWalkthrough1");
@@ -488,6 +508,8 @@ namespace HealthApp.Controllers
 
 
         // GET: OnboardingWalkthrough2
+        [OnboardingRequired]
+
         public async Task<IActionResult> OnboardingWalkthrough2()
         {
             var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -578,6 +600,8 @@ namespace HealthApp.Controllers
         }
 
         // GET: OnboardingWalkthrough3
+        [OnboardingRequired]
+
         public async Task<IActionResult> OnboardingWalkthrough3()
         {
             var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -640,9 +664,6 @@ namespace HealthApp.Controllers
 
             return RedirectToAction("Index", "Dashboard");
         }
-
-
-
 
     }
 }

@@ -6,6 +6,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using HealthApp.Data;
 using HealthApp.Helpers;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HealthApp.Controllers
 {
@@ -27,7 +28,6 @@ namespace HealthApp.Controllers
             return View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Index(string email, string password)
         {
@@ -39,25 +39,30 @@ namespace HealthApp.Controllers
             if (user != null)
             {
                 var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
-
-
-            };
+        {
+            new Claim(ClaimTypes.Name, user.Name),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString())
+        };
 
                 var identity = new ClaimsIdentity(claims, "MyCookieAuth");
                 var principal = new ClaimsPrincipal(identity);
 
                 await HttpContext.SignInAsync("MyCookieAuth", principal);
 
-                return RedirectToAction("Index", "Dashboard");
+                // ✅ Fetch the user profile to check onboarding status
+                var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == user.UserID);
+
+                if (profile != null && !profile.OnboardingComplete)
+                    return RedirectToAction("OnboardingWelcome", "Onboarding");
+                else
+                    return RedirectToAction("Index", "Dashboard");
             }
 
             ViewBag.Error = "Invalid credentials";
             return View();
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Logout()

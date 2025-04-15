@@ -24,20 +24,27 @@ namespace HealthApp.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (string.IsNullOrEmpty(userIdClaim))
             {
-                return RedirectToAction("Index", "Landing"); // or show an error view
+                return RedirectToAction("Index", "Landing"); // fallback
             }
 
             int userId = int.Parse(userIdClaim);
 
+            var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
+
+            // 🔒 Block users who haven’t completed onboarding
+            if (profile == null || !profile.OnboardingComplete)
+            {
+                return RedirectToAction("OnboardingWelcome", "Onboarding");
+            }
 
             var user = await _context.Users.FindAsync(userId);
 
-            return View(user); // Pass the user to the view
+            return View(user); // safe to show dashboard now
         }
+
     }
 }

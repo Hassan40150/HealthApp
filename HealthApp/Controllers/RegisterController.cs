@@ -2,6 +2,12 @@
 using HealthApp.Helpers;
 using HealthApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.EntityFrameworkCore;
+
+
 
 
 namespace HealthApp.Controllers
@@ -23,52 +29,57 @@ namespace HealthApp.Controllers
             return View();
         }
 
-        //public IActionResult Register()
-        //{
-        //    return View("/Views/Register/Register.cshtml");
-        //}
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-
-
-
-                //bool emailExists = await _context.Users.AnyAsync(u => u.Email == model.Email);
-
-                //if (emailExists)
-                //{
-                //    ModelState.AddModelError("Email", "That email is already registered.");
-                //    return View(model); // shows error message.
-                //}
-
-
-
                 var user = new Users
                 {
                     Name = model.Name,
-                    // Password = model.Password,
                     Password = PasswordHelper.HashPassword(model.Password),
-
                     Email = model.Email
                 };
 
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Index", "Dashboard");
+                // ✅ Create empty UserProfile after saving user
+                var profile = new UserProfiles
+                {
+                    UserID = user.UserID,
+                    Age = 0,
+                    Sex = "unspecified",
+                    HeightCm = 0,
+                    StartingWeight = 0,
+                    GoalWeight = 0,
+                    GoalType = "maintain",
+                    ActivityLevel = "unknown",
+                    OnboardingComplete = false
+                };
+
+                _context.UserProfiles.Add(profile);
+                await _context.SaveChangesAsync();
+
+                // 🔐 Log the user in
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
+            new Claim(ClaimTypes.Name, user.Name)
+        };
+
+                var identity = new ClaimsIdentity(claims, "login");
+                var principal = new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync(principal);
+
+                // 🔁 Redirect to onboarding
+                return RedirectToAction("OnboardingWelcome", "Onboarding");
             }
 
             return View("Index", model);
         }
-
-
-
-
 
     }
 }
