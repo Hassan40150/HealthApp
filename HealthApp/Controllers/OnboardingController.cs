@@ -396,7 +396,7 @@ namespace HealthApp.Controllers
 
             await FinalizeUserMetricsAsync(userId);
 
-            return RedirectToAction("OnboardingCalculatedSummary");
+            return RedirectToAction("OnboardingWalkthrough1");
         }
 
 
@@ -477,5 +477,107 @@ namespace HealthApp.Controllers
 
             await _context.SaveChangesAsync();
         }
+
+
+        // GET: OnboardingWalkthrough1
+        public IActionResult OnboardingWalkthrough1()
+        {
+            return View("OnboardingWalkthrough1");
+        }
+
+
+
+        // GET: OnboardingWalkthrough2
+        public async Task<IActionResult> OnboardingWalkthrough2()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdString, out int userId))
+                return Unauthorized();
+
+            var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
+            var metrics = await _context.Metrics.FirstOrDefaultAsync(m => m.UserID == userId);
+
+            if (profile == null || metrics == null)
+                return RedirectToAction("OnboardingAge");
+
+            var model = new Walkthrough2ViewModel
+            {
+                TDEE = (int)metrics.TDEE,
+                StartingWeight = profile.StartingWeight,
+                GoalWeight = profile.GoalWeight,
+                GoalType = profile.GoalType,
+                TimelineMonths = 12
+            };
+
+            // Precalculate 12-month goal
+            model.RecommendedCalories = CalculateCalorieGoal(
+                model.TDEE,
+                model.StartingWeight,
+                model.GoalWeight,
+                model.TimelineMonths,
+                model.GoalType
+            );
+
+            return View("OnboardingWalkthrough2", model);
+        }
+
+        // POST: OnboardingWalkthrough2
+        [HttpPost]
+        public async Task<IActionResult> OnboardingWalkthrough2(Walkthrough2ViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdString, out int userId))
+                return Unauthorized();
+
+            // Recalculate updated calorie goal
+            int calorieGoal = CalculateCalorieGoal(
+                model.TDEE,
+                model.StartingWeight,
+                model.GoalWeight,
+                model.TimelineMonths,
+                model.GoalType
+            );
+
+            // === Update existing CalorieGoals row ===
+            var calGoal = await _context.CalorieGoals.FirstOrDefaultAsync(c => c.UserID == userId);
+            if (calGoal != null)
+            {
+                calGoal.CalorieGoal = calorieGoal;
+                // Don't touch SetByUser or CreatedAt
+            }
+
+            // === Update timeline in UserProfiles ===
+            var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
+            if (profile != null)
+            {
+                profile.GoalTimeline = model.TimelineMonths;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("OnboardingWalkthrough3");
+        }
+
+
+        // HELPER METHOD FOR WALKTHROUGH 2
+        private int CalculateCalorieGoal(int tdee, float startWeight, float goalWeight, int months, string goalType)
+        {
+            float weightDiff = Math.Abs(goalWeight - startWeight);
+            float totalCalories = weightDiff * 7700f;
+            float dailyAdjustment = totalCalories / (months * 30f);
+
+            return goalType.ToLower() switch
+            {
+                "lose" => (int)(tdee - dailyAdjustment),
+                "gain" => (int)(tdee + dailyAdjustment),
+                _ => tdee
+            };
+        }
+
+
+
     }
 }
