@@ -15,7 +15,7 @@ namespace HealthApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Landing");
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,80 @@
+﻿@model HealthApp.ViewModels.Onboarding.OnboardingWaterIntakeViewModel
+
+@{
+    ViewData["Title"] = "Daily Liquid Intake";
+}
+
+<h2>How many glasses of each drink do you consume daily?</h2>
+
+<form asp-action="OnboardingWaterIntake" method="post">
+    <div class="drink-grid">
+        @foreach (var drink in Model.DrinkTypes)
+        {
+            <div class="drink-item">
+                <div class="drink-label">@drink.Label (@drink.Volume ml)</div>
+                <div class="drink-controls">
+                    <button type="button" onclick="adjustCount('@drink.Name', -1)">-</button>
+                    <input type="number" id="@drink.Name" name="@drink.Name" value="0" readonly />
+                    <button type="button" onclick="adjustCount('@drink.Name', 1)">+</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <button type="submit">See My Hydration Goal</button>
+</form>
+
+@section Scripts {
+    <script>
+        function adjustCount(id, delta) {
+            const input = document.getElementById(id);
+            let value = parseInt(input.value) + delta;
+            if (value < 0) value = 0;
+            input.value = value;
+        }
+    </script>
+}
+
+<style>
+    .drink-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 15px;
+    }
+
+    .drink-item {
+        text-align: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .drink-label {
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .drink-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .drink-controls button {
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .drink-controls input {
+            width: 40px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-weight: bold;
+            font-size: 16px;
+        }
+</style>

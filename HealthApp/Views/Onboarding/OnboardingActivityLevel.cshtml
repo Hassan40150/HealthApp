@@ -1,0 +1,82 @@
+﻿@model HealthApp.ViewModels.Onboarding.OnboardingActivityLevelViewModel
+
+@{
+    ViewData["Title"] = "How active are you?";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="OnboardingActivityLevel" method="post">
+    <div style="text-align:center; max-width: 400px; margin:auto;">
+
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <div class="activity-bar" id="bar1"></div>
+            <div class="activity-bar" id="bar2"></div>
+            <div class="activity-bar" id="bar3"></div>
+            <div class="activity-bar" id="bar4"></div>
+        </div>
+
+        <input type="range" asp-for="Level" min="1" max="4" step="1"
+               id="activitySlider"
+               oninput="updateActivityVisual(this.value)" />
+
+        <span asp-validation-for="Level" class="text-danger"></span>
+
+        <div style="margin-top:10px; font-weight: bold;" id="activityLabel">Low</div>
+    </div>
+
+    <button type="submit" style="margin-top:20px;">Continue</button>
+</form>
+
+@section Scripts {
+    <script>
+        const labels = ["Low", "Occasional", "Moderate", "High"];
+        const updateActivityVisual = (val) => {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById("bar" + i).style.backgroundColor = i <= val ? "#007BFF" : "#ccc";
+            }
+            document.getElementById("activityLabel").innerText = labels[val - 1];
+        };
+
+        // Trigger visual state on page load (if editing)
+        document.addEventListener("DOMContentLoaded", () => {
+            const slider = document.getElementById("activitySlider");
+            updateActivityVisual(slider.value);
+        });
+    </script>
+}
+
+<style>
+    .activity-bar {
+        width: 15px;
+        background-color: #ccc;
+        border-radius: 3px;
+        transition: background-color 0.3s;
+        align-self: flex-end;
+    }
+
+    #bar1 {
+        height: 25px;
+    }
+
+    #bar2 {
+        height: 45px;
+    }
+
+    #bar3 {
+        height: 65px;
+    }
+
+    #bar4 {
+        height: 85px;
+    }
+
+    .activity-bar-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        height: 90px;
+        margin-bottom: 15px;
+        gap: 5px;
+    }
+</style>

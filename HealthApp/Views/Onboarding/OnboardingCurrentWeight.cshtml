@@ -1,0 +1,24 @@
+﻿@model HealthApp.ViewModels.Onboarding.OnboardingCurrentWeightViewModel
+
+@{
+    ViewData["Title"] = "What's your current weight?";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="OnboardingCurrentWeight" method="post">
+    <div>
+        <label for="weightRange">Weight (kg): <span id="weightValue">@Model.Weight</span> kg</label><br />
+        <input type="range" asp-for="Weight" id="weightRange" min="30" max="200" step="1"
+               oninput="document.getElementById('weightValue').innerText = this.value" />
+        <span asp-validation-for="Weight" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Continue</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

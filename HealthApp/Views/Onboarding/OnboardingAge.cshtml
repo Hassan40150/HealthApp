@@ -1,0 +1,26 @@
+﻿@model HealthApp.ViewModels.Onboarding.OnboardingAgeViewModel
+
+
+@{
+    ViewData["Title"] = "OnboardingAge";
+}
+
+
+
+<h1>@ViewData["Title"]</h1>
+
+
+
+<form asp-action="OnboardingAge" method="post">
+    <label asp-for="Age"></label>
+    <input type="number" inputmode="numeric" asp-for="Age" />
+    <span asp-validation-for="Age"></span>
+    <button type="submit">Next</button>
+</form>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

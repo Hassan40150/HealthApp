@@ -1,0 +1,24 @@
+﻿@model HealthApp.ViewModels.Onboarding.OnboardingGoalWeightViewModel
+
+@{
+    ViewData["Title"] = "What's your goal weight?";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="OnboardingGoalWeight" method="post">
+    <div>
+        <label for="goalWeightRange">Goal Weight (kg): <span id="goalWeightValue">@Model.GoalWeight</span> kg</label><br />
+        <input type="range" asp-for="GoalWeight" id="goalWeightRange" min="30" max="250" step="1"
+               oninput="document.getElementById('goalWeightValue').innerText = this.value" />
+        <span asp-validation-for="GoalWeight" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Continue</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

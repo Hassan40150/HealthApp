@@ -1,4 +1,7 @@
-﻿namespace HealthApp.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+
+namespace HealthApp.Models
 {
 
     public class Users

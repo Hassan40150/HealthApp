@@ -1,0 +1,29 @@
+﻿@model HealthApp.ViewModels.Onboarding.OnboardingGenderViewModel
+
+@{
+    ViewData["Title"] = "What’s your gender?";
+}
+
+<h2>What’s your gender?</h2>
+
+<form asp-action="OnboardingGender" method="post">
+    <div>
+        <label>
+            <input type="radio" asp-for="Sex" value="male" />
+            Male
+        </label>
+        <label>
+            <input type="radio" asp-for="Sex" value="female" />
+            Female
+        </label>
+        <span asp-validation-for="Sex" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Continue</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
