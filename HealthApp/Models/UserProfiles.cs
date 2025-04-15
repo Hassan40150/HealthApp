@@ -20,6 +20,8 @@ namespace HealthApp.Models
         public required string ActivityLevel { get; set; }
         public int? GoalTimeline { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public bool OnboardingComplete { get; set; } = false;
+
 
 
         public Users? User { get; set; }

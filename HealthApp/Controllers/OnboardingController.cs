@@ -577,6 +577,71 @@ namespace HealthApp.Controllers
             };
         }
 
+        // GET: OnboardingWalkthrough3
+        public async Task<IActionResult> OnboardingWalkthrough3()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdString, out int userId)) return Unauthorized();
+
+            var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
+            var waterGoal = await _context.WaterGoals.FirstOrDefaultAsync(w => w.UserID == userId);
+
+            if (profile == null || waterGoal == null)
+                return RedirectToAction("OnboardingAge");
+
+            // CALC LOSS
+            float surfaceAreaFactor = (profile.HeightCm * 0.007f); // height contributes slightly
+            float baseLossPerKg = 20f; // ml per kg baseline metabolic + respiratory + passive loss
+
+            float baselineLoss = profile.StartingWeight * baseLossPerKg;
+            float adjustedBaseline = baselineLoss * surfaceAreaFactor;
+
+            float activityMultiplier = profile.ActivityLevel.ToLower() switch
+            {
+                "low" => 1.0f,
+                "occasional" => 1.1f,
+                "moderate" => 1.3f,
+                "high" => 1.5f,
+                _ => 1.0f
+            };
+
+            int typicalLoss = (int)(adjustedBaseline * activityMultiplier);
+
+
+            string feedback = waterGoal.UserWaterIntake < waterGoal.WaterGoalMl
+                ? "Careful! You're drinking less than recommended. Try to drink more water daily."
+                : "Well done! You're meeting your hydration goal. We'll help you stay on track by logging your intake.";
+
+            var model = new Walkthrough3ViewModel
+            {
+                RecommendedMl = waterGoal.WaterGoalMl,
+                ActualIntakeMl = waterGoal.UserWaterIntake,
+                TypicalLossMl = typicalLoss,
+                HydrationFeedback = feedback
+            };
+
+            return View("OnboardingWalkthrough3", model);
+        }
+
+        // POST: OnboardingWalkthrough3
+
+        [HttpPost]
+        public async Task<IActionResult> OnboardingWalkthrough3Post()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdString, out int userId)) return Unauthorized();
+
+            var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
+            if (profile != null)
+            {
+                profile.OnboardingComplete = true;
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+
 
 
     }
