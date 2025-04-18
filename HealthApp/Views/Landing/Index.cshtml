@@ -1,12 +1,20 @@
 ﻿@{
-    ViewData["Title"] = "Landing";
+    // ViewData["Title"] = "Landing";
 }
 
 
 
-<h1>@ViewData["Title"]</h1>
+<div class="landing">
+
+    <div class="landing_title">
+        <h1>Nomie</h1>
+        <h2>Your Health, Fully Tracked</h2>
+    </div>
+    
+    <div class="landing_CTA">
+        <a class="nav-link text-light landing_btn" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+        <a class="nav-link text-light landing_btn" asp-area="" asp-controller="Register" asp-action="Index">Register</a>
+    </div>
 
 
-
-<a class="nav-link text-light" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-<a class="nav-link text-light" asp-area="" asp-controller="Register" asp-action="Index">Register</a>
+</div>
