@@ -4,7 +4,6 @@
 
 
 * {
-    background-color: #121212;
     color: #ffffff;
     font-family: 'Overpass';
 }
@@ -14,4 +13,8 @@ body {
     background-color: #121212;
     color: #ffffff;
     font-family: 'Overpass';
+}
+
+.base_main {
+    height: 100vh;
 }

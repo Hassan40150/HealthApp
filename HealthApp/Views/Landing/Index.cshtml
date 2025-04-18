@@ -1,20 +1,26 @@
 ﻿@{
-    // ViewData["Title"] = "Landing";
+	// ViewData["Title"] = "Landing";
 }
-
-
 
 <div class="landing">
 
-    <div class="landing_title">
-        <h1>Nomie</h1>
-        <h2>Your Health, Fully Tracked</h2>
-    </div>
-    
-    <div class="landing_CTA">
-        <a class="nav-link text-light landing_btn" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-        <a class="nav-link text-light landing_btn" asp-area="" asp-controller="Register" asp-action="Index">Register</a>
-    </div>
+	<div class="landing_title">
+		<h1 id="landing_title">Nomie</h1>
+		<h2 id="landing_subtitle">Your Health, Fully Tracked</h2>
+	</div>
+
+	<div class="landing_CTA">
+		<a class="nav-link text-light landing_btn" asp-area="" asp-controller="Login" asp-action="Index">
+			Login
+			<i class="fa-solid fa-chevron-right"></i>
+		</a>
+
+		<a class="nav-link text-light landing_btn" asp-area="" asp-controller="Register" asp-action="Index">
+			Register
+			<i class="fa-solid fa-chevron-right"></i>
+		</a>
+	</div>
 
 
 </div>
+
