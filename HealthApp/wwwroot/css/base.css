@@ -1,0 +1,14 @@
+﻿@import "typography.css";
+@import "buttons.css";
+
+
+* {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+}
