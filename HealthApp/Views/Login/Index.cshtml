@@ -1,4 +1,6 @@
-﻿@{
+﻿@model HealthApp.ViewModels.LoginViewModel
+
+@{
     ViewData["Title"] = "Login";
 }
 
@@ -9,14 +11,41 @@
     <div class="alert alert-danger">@ViewBag.Error</div>
 }
 
-<form method="post">
+<form method="post" novalidate>
     <div class="form-group">
-        <label>Email</label>
-        <input name="email" class="form-control" type="email" required />
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label>Password</label>
-        <input name="password" class="form-control" type="password" required />
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
     <button type="submit" class="btn btn-primary mt-2">Login</button>
 </form>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+<style>
+    .text-danger ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .text-danger li {
+        margin-left: 0;
+    }
+</style>
