@@ -1,0 +1,51 @@
+﻿.onboarding {
+    padding: 4rem 2rem;
+    height: 100%;
+}
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.welcome-message {
+    padding-top: 2rem;
+}
+
+    .welcome-message > h3 {
+        font-size: 1.15rem;
+        font-weight: 250;
+    }
+
+
+.age {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.age-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.age-input {
+    display: flex;
+    flex-direction: column;
+    padding-top: 8rem;
+}
+
+.age-submit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

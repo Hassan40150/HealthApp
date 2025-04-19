@@ -1,26 +1,61 @@
 ﻿@model HealthApp.ViewModels.Onboarding.OnboardingAgeViewModel
-
-
-@{
-    ViewData["Title"] = "OnboardingAge";
+@section Styles {
+	<link rel="stylesheet" href="~/css/onboarding.css" />
 }
 
 
 
-<h1>@ViewData["Title"]</h1>
+
+<div class="onboarding">
+
+	<div class="onboarding-top-section">
+
+			<div class="onboarding-back">
+			<a asp-controller="Onboarding" asp-action="OnboardingWelcome">
+				<i class="fa-solid fa-chevron-left"></i>
+			</a>
+			</div>
+
+
+			<div>
+				Progress Bar Here...
+			</div>
+
+
+			<div>
+
+			</div>
+	</div>
+
+
+	<div class="age">
+
+		<form asp-action="OnboardingAge" method="post" class="age-form">
+
+			<div class="age-input">
+				<label asp-for="Age">How old are you?</label>
+				<input class="form-input" type="number" inputmode="numeric" asp-for="Age" />
+				<span asp-validation-for="Age"></span>
+
+			</div>
+
+
+			<div class="age-submit">
+				<button type="submit" asp-action="OnboardingGender" class="nomie-btn">Continue</button>
+
+			</div>
 
 
 
-<form asp-action="OnboardingAge" method="post">
-    <label asp-for="Age"></label>
-    <input type="number" inputmode="numeric" asp-for="Age" />
-    <span asp-validation-for="Age"></span>
-    <button type="submit">Next</button>
-</form>
+
+		</form>
+
+	</div>
+</div>
 
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }

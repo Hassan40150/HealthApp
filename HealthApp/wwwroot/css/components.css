@@ -1,1 +1,61 @@
-﻿
+﻿/* ONBOARDING TOP SECTION */
+
+.onboarding-top-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .onboarding-top-section > h1 {
+        font-size: 1.8rem;
+        margin: auto;
+    }
+
+.onboarding-back > a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.onboarding-back > i {
+    font-size: 0.9rem;
+}
+
+
+/* FORM INPUT */
+
+.form-input {
+    border-bottom: 3px solid #ffffff !important;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    background-color: #ffffff00;
+    outline: none;
+    box-shadow: none;
+    color: white;
+    padding: 0.5rem 0rem 0rem 0rem;
+    font-size: 0.9rem;
+}
+
+    .form-input:focus {
+        color: #ffffff;
+        background-color: #ffffff00;
+        border-color: #ffffff00;
+        outline: none;
+        box-shadow: none;
+    }
+
+
+
+/* ERROR MESSAGES */
+
+.field-validation-error {
+    margin-top: 0.5rem;
+}
+
+.field-validation-error > span {
+    color: #FF6666;
+    font-size: 0.9rem;
+    font-weight: 200;
+}

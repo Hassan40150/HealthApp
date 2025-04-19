@@ -1,12 +1,41 @@
-﻿@{
-    ViewData["Title"] = "OnboardingWelcome";
+﻿@section Styles {
+	<link rel="stylesheet" href="~/css/onboarding.css" />
 }
 
+<div class="onboarding">
+
+	<div class="onboarding-top-section">
+		<div class="onboarding-back">
+			<a asp-controller="Login" asp-action="Logout">
+				<i class="fa-solid fa-chevron-left"></i>
+			</a>
+		</div>
+	</div>
 
 
-<h1>@ViewData["Title"]</h1>
+	<div class="welcome">
+
+		<div class="welcome-message">
+
+			<h3>Welcome.</h3>
+
+			<h3>Whether you're looking to lose, maintain, or gain weight — you're in the right place.</h3>
+
+			<h3>Let's get you set up!</h3>
 
 
-<a asp-action="OnboardingTrackIntro" class="inline-block bg-blue-600 text-white px-6 py-2 rounded shadow">
-    Continue
-</a>
+		</div>
+
+
+		<div>
+			<a asp-action="OnboardingAge" class="nomie-btn">
+				I'm Ready
+			</a>
+		</div>
+
+	</div>
+
+
+</div>
+
+
