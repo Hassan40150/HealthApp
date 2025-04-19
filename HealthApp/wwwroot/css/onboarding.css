@@ -21,6 +21,8 @@
     }
 
 
+/* AGE */
+
 .age {
     display: flex;
     flex-direction: column;
@@ -41,11 +43,98 @@
     display: flex;
     flex-direction: column;
     padding-top: 8rem;
+    font-size: 1.1rem;
 }
+
+    .age-input > label {
+        font-size: 1.15rem;
+    }
 
 .age-submit {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+
+
+/* GENDER */
+
+.gender {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gender-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.gender-input {
+    display: flex;
+    flex-direction: column;
+    padding-top: 8rem;
+    font-size: 1.1rem;
+    gap: 1.1rem;
+}
+
+
+    .gender-input > label {
+        font-size: 1.15rem;
+    }
+
+
+.gender-submit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.gender-container {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    font-size: 1.15rem;
+    color: white;
+}
+
+.custom-radio {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+    .custom-radio input[type="radio"] {
+        display: none;
+    }
+
+.radio-circle {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 6px solid white;
+    background-color: #bdbdbd;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.custom-radio input[type="radio"]:checked + .radio-circle {
+    background-color: #ffffff;
+    border-color: #49BDF8;
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 1.5rem;
+    margin-top: 1rem;
 }
