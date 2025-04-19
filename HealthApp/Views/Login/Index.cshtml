@@ -8,7 +8,9 @@
 <div class="login">
 
 	<div class="login-top-section">
-		<i class="fa-solid fa-chevron-left"></i>
+		<a asp-controller="Home" asp-action="Index">
+			<i class="fa-solid fa-chevron-left"></i>
+		</a>
 		<h1>Login</h1>
 		<div> </div>
 	</div>
@@ -33,7 +35,7 @@
 
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-			<button type="submit" class="btn btn-primary mt-2 login_btn">Login</button>
+			<button type="submit" class="btn btn-primary mt-2 login-btn">Login</button>
 
 		</form>
 	</div>
