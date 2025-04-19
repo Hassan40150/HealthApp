@@ -1,21 +1,21 @@
-﻿@{
-	// ViewData["Title"] = "Landing";
+﻿@section Styles {
+	<link rel="stylesheet" href="~/css/landing.css" />
 }
 
 <div class="landing">
 
-	<div class="landing_title">
-		<h1 id="landing_title">Nomie</h1>
-		<h2 id="landing_subtitle">Your Health, Fully Tracked</h2>
+	<div class="landing-title">
+		<h1 id="landing-title">Nomie</h1>
+		<h2 id="landing-subtitle">Your Health, Fully Tracked</h2>
 	</div>
 
-	<div class="landing_CTA">
-		<a class="nav-link text-light landing_btn" asp-area="" asp-controller="Login" asp-action="Index">
+	<div class="landing-CTA">
+		<a class="nav-link text-light landing-btn" asp-area="" asp-controller="Login" asp-action="Index">
 			Login
 			<i class="fa-solid fa-chevron-right"></i>
 		</a>
 
-		<a class="nav-link text-light landing_btn" asp-area="" asp-controller="Register" asp-action="Index">
+		<a class="nav-link text-light landing-btn" asp-area="" asp-controller="Register" asp-action="Index">
 			Register
 			<i class="fa-solid fa-chevron-right"></i>
 		</a>

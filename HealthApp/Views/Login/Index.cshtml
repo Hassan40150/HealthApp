@@ -1,51 +1,49 @@
 ﻿@model HealthApp.ViewModels.LoginViewModel
 
-@{
-    ViewData["Title"] = "Login";
+@section Styles {
+	<link rel="stylesheet" href="~/css/login.css" />
 }
 
-<h2>Login</h2>
 
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger">@ViewBag.Error</div>
-}
+<div class="login">
 
-<form method="post" novalidate>
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" type="password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<div class="login-top-section">
+		<i class="fa-solid fa-chevron-left"></i>
+		<h1>Login</h1>
+		<div> </div>
+	</div>
 
 
-    <button type="submit" class="btn btn-primary mt-2">Login</button>
-</form>
 
+	<div class="login-form">
+
+		<form method="post" novalidate>
+
+			<div class="form-group">
+				<label asp-for="Email"></label>
+				<input asp-for="Email" class="form-control" />
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Password"></label>
+				<input asp-for="Password" class="form-control" type="password" />
+				<span asp-validation-for="Password" class="text-danger"></span>
+			</div>
+
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+			<button type="submit" class="btn btn-primary mt-2 login_btn">Login</button>
+
+		</form>
+	</div>
+
+
+</div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }
 
-
-<style>
-    .text-danger ul {
-        list-style: none;
-        padding-left: 0;
-        margin: 0;
-    }
-
-    .text-danger li {
-        margin-left: 0;
-    }
-</style>

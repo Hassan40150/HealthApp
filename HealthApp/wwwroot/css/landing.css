@@ -1,11 +1,9 @@
-﻿/* DESKTOP VIEW */
-
-#landing_title {
-    font-size: 2.4rem;
+﻿#landing-title {
+    font-size: 2.2rem;
     font-weight: 700;
 }
 
-#landing_subtitle {
+#landing-subtitle {
     font-size: 1.4rem;
     font-weight: 300;
 }
@@ -13,110 +11,39 @@
 .landing {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     height: 100%;
     gap: 6rem;
+
+    padding: 4rem 2rem;
+    justify-content: space-between;
+    align-items: normal;
 }
 
-.landing_title {
-    width: 35%;
+.landing-title {
     display: flex;
     flex-direction: column;
-}
-
-.landing_CTA {
+    padding-top: 2rem;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
 }
 
-.landing_btn {
-    font-size: 1.8rem;
+.landing-CTA {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.landing-btn {
     background-color: #49BDF8;
     border-radius: 5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 35%;
     padding: 1.3rem 3rem;
     align-items: center;
-}
-
-/* TABLET VIEW */
-/* 1400px width */
-
-@media only screen and (max-width: 1400px) {
-
-    #landing_title {
-        font-size: 2.2rem;
-        font-weight: 700;
-    }
-
-    #landing_subtitle {
-        font-size: 1.4rem;
-        font-weight: 300;
-    }
-
-    .landing_btn {
-        width: 100%;
-        font-size: 1.5rem;
-    }
-
-    .landing {
-        padding: 4rem 2rem;
-        justify-content: space-between;
-        align-items: normal;
-    }
-
-    .landing_title {
-        padding-top: 2rem;
-        width: 100%;
-    }
-
-    .landing_CTA {
-        gap: 1rem;
-        width: 100%;
-    }
-
+    width: 100%;
+    font-size: 1.5rem;
 }
 
 
-/* MOBILE/APP VIEW */
-/* 900? */
-
-@media only screen and (max-width: 770px) {
-
-    #landing_title {
-        font-size: 2.2rem;
-        font-weight: 700;
-    }
-
-    #landing_subtitle {
-        font-size: 1.4rem;
-        font-weight: 300;
-    }
-
-    .landing_btn {
-        width: 100%;
-        font-size: 1.5rem;
-    }
-
-    .landing {
-        padding: 4rem 2rem;
-        justify-content: space-between;
-        align-items: normal;
-    }
-
-    .landing_title {
-        padding-top: 2rem;
-        width: 100%;
-    }
-
-    .landing_CTA {
-        gap: 1rem;
-        width: 100%;
-    }
-}
