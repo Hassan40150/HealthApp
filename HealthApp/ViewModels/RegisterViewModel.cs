@@ -11,8 +11,14 @@ namespace HealthApp.ViewModels
 
         [DataType(DataType.Password)]
         [RegularExpression(@"^(?=.*[A-Z])(?=.*\d).{8,}$",
-    ErrorMessage = "Password must be at least 8 characters long, contain one uppercase letter, and one number.")]
-
+        ErrorMessage = @"<div class='text-danger register-password'>
+                        Password requirements:
+                        <ul>
+                            <li>Minimum of 8 characters</li>
+                            <li>At least one uppercase letter</li>
+                            <li>At least one number</li>
+                        </ul>
+                     </div>")]
         public required string Password { get; set; }
 
         [EmailAddress]
