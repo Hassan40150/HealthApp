@@ -1,24 +1,68 @@
 ﻿@model HealthApp.ViewModels.Onboarding.OnboardingCurrentWeightViewModel
-
-@{
-    ViewData["Title"] = "What's your current weight?";
+@section Styles {
+	<link rel="stylesheet" href="~/css/onboarding.css" />
 }
 
-<h1>@ViewData["Title"]</h1>
 
-<form asp-action="OnboardingCurrentWeight" method="post">
-    <div>
-        <label for="weightRange">Weight (kg): <span id="weightValue">@Model.Weight</span> kg</label><br />
-        <input type="range" asp-for="Weight" id="weightRange" min="30" max="200" step="1"
-               oninput="document.getElementById('weightValue').innerText = this.value" />
-        <span asp-validation-for="Weight" class="text-danger"></span>
-    </div>
 
-    <button type="submit">Continue</button>
-</form>
+
+<div class="onboarding">
+
+	<div class="onboarding-top-section">
+
+		<div class="onboarding-back">
+			<a asp-controller="Onboarding" asp-action="OnboardingHeight">
+				<i class="fa-solid fa-chevron-left"></i>
+			</a>
+		</div>
+
+
+		<div class="progress-container">
+			<div class="progress-bar" style="width: 40%;"></div>
+		</div>
+
+
+		<div>
+		</div>
+	</div>
+
+
+	<div class="current-weight">
+
+
+
+
+		<form asp-action="OnboardingCurrentWeight" method="post" class="current-weight-form">
+
+
+			<div class="current-weight-input">
+
+				<label for="weightRange" id="weight-question">How much do you weigh?</label>
+				<h4 id="current-weight-tip">Tip: for accurate results, weigh yourself in just your underwear</h4>
+
+				<input type="range" asp-for="Weight" class="blue-slider styled-slider"
+					   id="weightRange" min="30" max="200" step="1"
+					   oninput="document.getElementById('weightValue').innerText = this.value" />
+
+				<label for="weightRange" id="current-weight-value"><span id="weightValue">@Model.Weight</span>kg</label>
+
+				<span asp-validation-for="Weight" class="text-danger"></span>
+			</div>
+
+
+			<div class="current-weight-submit">
+				<button type="submit" class="nomie-btn">Continue</button>
+			</div>
+		</form>
+
+	</div>
+</div>
+
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+
 }
+

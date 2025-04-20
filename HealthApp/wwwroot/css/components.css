@@ -54,11 +54,11 @@
     margin-top: 0.5rem;
 }
 
-.field-validation-error > span {
-    color: #FF6666;
-    font-size: 0.9rem;
-    font-weight: 200;
-}
+    .field-validation-error > span {
+        color: #FF6666;
+        font-size: 0.9rem;
+        font-weight: 200;
+    }
 
 /*  ONBOARDING PROGRESS BAR */
 
