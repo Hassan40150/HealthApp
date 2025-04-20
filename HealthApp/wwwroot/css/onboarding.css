@@ -380,7 +380,7 @@
     display: flex;
     width: 100%;
     flex-direction: column;
-    padding-top: 4rem;
+    padding-top: 8rem;
     font-size: 1.1rem;
     gap: 1.1rem;
 }
@@ -404,4 +404,91 @@
     font-weight: bold;
     text-align: center;
     font-weight: 400;
+}
+
+
+/* HYDRATION WATER INTAKE */
+
+
+.drink-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.drink-label {
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+.drink-label > p {
+    color: red;
+}
+
+.drink-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+}
+
+    .drink-controls button {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5rem;
+    }
+
+    .drink-controls input {
+        width: 40px;
+        text-align: center;
+        border: none;
+        background: #00000000;
+        font-weight: 500;
+        color: white;
+        font-size: 16px;
+    }
+
+
+.drink {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.drink-form {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drink-flex {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.drink-input {
+    width: 100%;
+    padding-top: 2rem;
+    font-size: 1.1rem;
+    gap: 0.8rem;
+}
+
+#drink-question {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.small, small {
+    font-size: 0.7rem;
+    color: #6E6E6E;
 }
