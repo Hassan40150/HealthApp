@@ -249,3 +249,60 @@
     font-size: 1rem;
     text-align: center;
 }
+
+
+
+/* GOAL WEIGHT */
+
+
+.weight-question {
+    padding-bottom: 0rem;
+}
+
+.goal-weight {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.goal-weight-form {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.goal-weight-submit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.goal-weight-input {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding-top: 8rem;
+    font-size: 1.1rem;
+    gap: 1.1rem;
+}
+
+    .goal-weight-input > label {
+        font-size: 1.15rem;
+    }
+
+
+#goal-weight-question {
+    padding-bottom: 2rem;
+}
+
+#goal-weight-value {
+    font-size: 1rem;
+    text-align: center;
+}
