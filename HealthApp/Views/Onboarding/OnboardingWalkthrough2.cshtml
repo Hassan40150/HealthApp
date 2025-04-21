@@ -19,20 +19,21 @@
         <span id="calorie-goal">@Model.RecommendedCalories</span> calories/day
     </h1>
 
+    @Html.ValidationSummary(true, "", new { @class = "text-red-500 mb-4" })
+
     <form asp-action="OnboardingWalkthrough2" method="post">
         <input type="hidden" asp-for="TDEE" />
         <input type="hidden" asp-for="StartingWeight" />
         <input type="hidden" asp-for="GoalWeight" />
         <input type="hidden" asp-for="GoalType" />
-        <input type="hidden" id="recommendedCalories" name="RecommendedCalories" value="@Model.RecommendedCalories" />
+        <input type="hidden" asp-for="RecommendedCalories" id="recommendedCalories" />
 
         <label for="timeline-slider" class="font-medium">Goal Timeline (months):</label>
         <input type="range"
+               asp-for="TimelineMonths"
                id="timeline-slider"
-               name="TimelineMonths"
                min="@minMonths"
                max="@maxMonths"
-               value="@Model.TimelineMonths"
                class="w-full mt-2 mb-6" />
 
         <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded shadow">
@@ -48,12 +49,12 @@
         const calorieGoalDisplay = document.getElementById("calorie-goal");
         const recommendedInput = document.getElementById("recommendedCalories");
 
-        const tdee = @Model.TDEE;
-        const start = @Model.StartingWeight;
-        const goal = @Model.GoalWeight;
+        const tdee = parseFloat("@Model.TDEE");
+        const start = parseFloat("@Model.StartingWeight");
+        const goal = parseFloat("@Model.GoalWeight");
         const goalType = "@Model.GoalType".toLowerCase();
 
-        slider.addEventListener("input", () => {
+        function updateCalories() {
             const months = parseInt(slider.value);
             monthLabel.textContent = months;
 
@@ -65,9 +66,12 @@
             if (goalType === "lose") newGoal = tdee - dailyAdjust;
             else if (goalType === "gain") newGoal = tdee + dailyAdjust;
 
-            const roundedGoal = Math.round(newGoal);
+            const roundedGoal = Math.max(0, Math.round(newGoal));
             calorieGoalDisplay.textContent = roundedGoal;
             recommendedInput.value = roundedGoal;
-        });
+        }
+
+        slider.addEventListener("input", updateCalories);
+        updateCalories();
     </script>
 }

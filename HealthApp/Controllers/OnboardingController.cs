@@ -25,6 +25,8 @@ namespace HealthApp.Controllers
 
         public IActionResult OnboardingWelcome() // 1
         {
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+            ViewBag.UserName = userName;
             return View("OnboardingWelcome");
         }
 
@@ -414,7 +416,7 @@ namespace HealthApp.Controllers
 
             await FinalizeUserMetricsAsync(userId);
 
-            return RedirectToAction("OnboardingWalkthrough1");
+            return RedirectToAction("OnboardingWalkthrough3");
         }
 
 
@@ -507,14 +509,31 @@ namespace HealthApp.Controllers
 
 
 
-        // GET: OnboardingWalkthrough2
-        [OnboardingRequired]
+        // POST: OnboardingWalkthrough1
+        [HttpPost]
+        public async Task<IActionResult> CompleteOnboarding()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdString, out int userId)) return Unauthorized();
 
+            var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
+            if (profile != null)
+            {
+                profile.OnboardingComplete = true;
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+
+
+        // GET 
+        [OnboardingRequired]
         public async Task<IActionResult> OnboardingWalkthrough2()
         {
             var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (!int.TryParse(userIdString, out int userId))
-                return Unauthorized();
+            if (!int.TryParse(userIdString, out int userId)) return Unauthorized();
 
             var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
             var metrics = await _context.Metrics.FirstOrDefaultAsync(m => m.UserID == userId);
@@ -528,63 +547,55 @@ namespace HealthApp.Controllers
                 StartingWeight = profile.StartingWeight,
                 GoalWeight = profile.GoalWeight,
                 GoalType = profile.GoalType,
-                TimelineMonths = 12
+                TimelineMonths = 12,
+                RecommendedCalories = CalculateCalorieGoal(
+                    (int)metrics.TDEE,
+                    profile.StartingWeight,
+                    profile.GoalWeight,
+                    12,
+                    profile.GoalType)
             };
-
-            // Precalculate 12-month goal
-            model.RecommendedCalories = CalculateCalorieGoal(
-                model.TDEE,
-                model.StartingWeight,
-                model.GoalWeight,
-                model.TimelineMonths,
-                model.GoalType
-            );
 
             return View("OnboardingWalkthrough2", model);
         }
 
-        // POST: OnboardingWalkthrough2
+
+        // POST
         [HttpPost]
         public async Task<IActionResult> OnboardingWalkthrough2(Walkthrough2ViewModel model)
         {
+            Console.WriteLine("[POST] OnboardingWalkthrough2 called");
+
             if (!ModelState.IsValid)
-                return View(model);
-
-            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (!int.TryParse(userIdString, out int userId))
-                return Unauthorized();
-
-            // Recalculate updated calorie goal
-            int calorieGoal = CalculateCalorieGoal(
-                model.TDEE,
-                model.StartingWeight,
-                model.GoalWeight,
-                model.TimelineMonths,
-                model.GoalType
-            );
-
-            // === Update existing CalorieGoals row ===
-            var calGoal = await _context.CalorieGoals.FirstOrDefaultAsync(c => c.UserID == userId);
-            if (calGoal != null)
             {
-                calGoal.CalorieGoal = calorieGoal;
-                // Don't touch SetByUser or CreatedAt
+                Console.WriteLine("Invalid model:");
+                foreach (var kvp in ModelState)
+                    foreach (var err in kvp.Value.Errors)
+                        Console.WriteLine($" - {kvp.Key}: {err.ErrorMessage}");
+
+                return View(model);
             }
 
-            // === Update timeline in UserProfiles ===
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdString, out int userId)) return Unauthorized();
+
             var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
             if (profile != null)
             {
                 profile.GoalTimeline = model.TimelineMonths;
             }
 
-            await _context.SaveChangesAsync();
+            var calGoal = await _context.CalorieGoals.FirstOrDefaultAsync(c => c.UserID == userId);
+            if (calGoal != null)
+            {
+                calGoal.CalorieGoal = model.RecommendedCalories;
+            }
 
-            return RedirectToAction("OnboardingWalkthrough3");
+            await _context.SaveChangesAsync();
+            return RedirectToAction("OnboardingWalkthrough1");
         }
 
-
-        // HELPER METHOD FOR WALKTHROUGH 2
+        // HELPER METHOD FOR WALTHROUGHT 2
         private int CalculateCalorieGoal(int tdee, float startWeight, float goalWeight, int months, string goalType)
         {
             float weightDiff = Math.Abs(goalWeight - startWeight);
@@ -598,6 +609,7 @@ namespace HealthApp.Controllers
                 _ => tdee
             };
         }
+
 
         // GET: OnboardingWalkthrough3
         [OnboardingRequired]
@@ -644,26 +656,10 @@ namespace HealthApp.Controllers
                 HydrationFeedback = feedback
             };
 
-            return View("OnboardingWalkthrough3", model);
+            return View(model);
         }
 
-        // POST: OnboardingWalkthrough3
 
-        [HttpPost]
-        public async Task<IActionResult> OnboardingWalkthrough3Post()
-        {
-            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (!int.TryParse(userIdString, out int userId)) return Unauthorized();
-
-            var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
-            if (profile != null)
-            {
-                profile.OnboardingComplete = true;
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToAction("Index", "Dashboard");
-        }
 
     }
 }

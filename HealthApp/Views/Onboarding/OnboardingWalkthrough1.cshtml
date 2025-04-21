@@ -1,15 +1,22 @@
 ﻿@{
-    ViewData["Title"] = "Track Your Weight";
+	ViewData["Title"] = "Track Your Weight";
 }
 
 <div class="walkthrough-container text-center">
-    <h2 class="text-2xl font-semibold mb-4">Track Your Weight Daily</h2>
-    <p class="mb-6 text-gray-700">
-        We recommend weighing yourself every morning around the same time and in similar clothing.
-        This helps ensure your progress is consistent and accurate.
-    </p>
+	<h2 class="text-2xl font-semibold mb-4">Showcase...</h2>
+	<p class="mb-6 text-gray-700">
+		We recommend weighing yourself every morning around the same time and in similar clothing.
+		This helps ensure your progress is consistent and accurate.
+	</p>
 
-    <a asp-action="OnboardingWalkthrough2" class="inline-block bg-blue-600 text-white px-6 py-2 rounded shadow">
-        Continue
-    </a>
+
+	<form asp-action="CompleteOnboarding" method="post">
+
+
+		<button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded shadow">
+			Continue
+		</button>
+	</form>
+
+
 </div>
