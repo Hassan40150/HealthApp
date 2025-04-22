@@ -619,6 +619,7 @@ namespace HealthApp.Controllers
             var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!int.TryParse(userIdString, out int userId)) return Unauthorized();
 
+
             var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
             var waterGoal = await _context.WaterGoals.FirstOrDefaultAsync(w => w.UserID == userId);
 
@@ -644,9 +645,11 @@ namespace HealthApp.Controllers
             int typicalLoss = (int)(adjustedBaseline * activityMultiplier);
 
 
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+
             string feedback = waterGoal.UserWaterIntake < waterGoal.WaterGoalMl
-                ? "Careful! You're drinking less than recommended. Try to drink more water daily."
-                : "Well done! You're meeting your hydration goal. We'll help you stay on track by logging your intake.";
+                ? $"Careful {userName}! You're drinking less than recommended. Try to drink more water daily."
+                : $"Well done {userName}! You're meeting your hydration goal. We'll help you stay on track by logging your intake.";
 
             var model = new Walkthrough3ViewModel
             {
