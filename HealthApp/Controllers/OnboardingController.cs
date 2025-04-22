@@ -519,7 +519,7 @@ namespace HealthApp.Controllers
             var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == userId);
             if (profile != null)
             {
-                profile.OnboardingComplete = true;
+                //profile.OnboardingComplete = true;
                 await _context.SaveChangesAsync();
             }
 
