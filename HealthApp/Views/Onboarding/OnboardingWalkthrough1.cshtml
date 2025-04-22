@@ -1,15 +1,61 @@
-﻿@{
-    ViewData["Title"] = "Track Your Weight";
+﻿@section Styles {
+	<link rel="stylesheet" href="~/css/onboarding.css" />
 }
 
-<div class="walkthrough-container text-center">
-    <h2 class="text-2xl font-semibold mb-4">Track Your Weight Daily</h2>
-    <p class="mb-6 text-gray-700">
-        We recommend weighing yourself every morning around the same time and in similar clothing.
-        This helps ensure your progress is consistent and accurate.
-    </p>
 
-    <a asp-action="OnboardingWalkthrough2" class="inline-block bg-blue-600 text-white px-6 py-2 rounded shadow">
-        Continue
-    </a>
+
+
+<div class="onboarding">
+
+	<div class="onboarding-top-section">
+		<div class="onboarding-back">
+			<a asp-controller="Onboarding" asp-action="OnboardingWalkthrough2">
+				<i class="fa-solid fa-chevron-left"></i>
+			</a>
+		</div>
+		<div class="progress-container">
+			<div class="progress-bar" style="width: 90%;"></div>
+		</div>
+		<div>
+		</div>
+	</div>
+
+
+	<div class="complete-onboarding">
+
+		<div class="complete-onboarding-cards">
+			<h1>Stay on Track Daily</h1>
+			<p>
+				Check in every day to log your weight, calories, and water. The more consistent you are, the better your progress!
+			</p>
+		</div>
+
+		<div class="complete-onboarding-cards">
+			<h1>Use the Colors as Cues</h1>
+			<p>
+				Colors show your progress: <span style="color: #00FF01;">Green</span>  = on track, <span style="color: #FFC300;">Amber</span>  = almost there, <span style="color: #FE0000;">Red</span>  = needs attention. Let the colors guide your focus.
+			</p>
+		</div>
+
+		<div class="complete-onboarding-cards">
+			<h1>Know What to Watch</h1>
+			<p>
+				Weight: track changes over time. Calories: stay near your goal to hit your target. Hydration: hit your daily water goal to feel your best. Everything is synced to your dashboard.
+			</p>
+		</div>
+
+
+		<form asp-action="CompleteOnboarding" method="post">
+			<button type="submit" class="nomie-btn">
+				Continue
+			</button>
+		</form>
+
+	</div>
+
+
+
+
+
 </div>
+

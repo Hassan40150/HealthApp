@@ -1,0 +1,49 @@
+﻿#landing-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+#landing-subtitle {
+    font-size: 1.4rem;
+    font-weight: 300;
+}
+
+.landing {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 6rem;
+
+    padding: 4rem 2rem;
+    justify-content: space-between;
+    align-items: normal;
+}
+
+.landing-title {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    width: 100%;
+}
+
+.landing-CTA {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.landing-btn {
+    background-color: #49BDF8;
+    border-radius: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1.3rem 3rem;
+    align-items: center;
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+

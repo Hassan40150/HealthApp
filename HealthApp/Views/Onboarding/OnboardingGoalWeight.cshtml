@@ -1,24 +1,65 @@
 ﻿@model HealthApp.ViewModels.Onboarding.OnboardingGoalWeightViewModel
-
-@{
-    ViewData["Title"] = "What's your goal weight?";
+@section Styles {
+	<link rel="stylesheet" href="~/css/onboarding.css" />
 }
 
-<h1>@ViewData["Title"]</h1>
 
-<form asp-action="OnboardingGoalWeight" method="post">
-    <div>
-        <label for="goalWeightRange">Goal Weight (kg): <span id="goalWeightValue">@Model.GoalWeight</span> kg</label><br />
-        <input type="range" asp-for="GoalWeight" id="goalWeightRange" min="30" max="250" step="1"
-               oninput="document.getElementById('goalWeightValue').innerText = this.value" />
-        <span asp-validation-for="GoalWeight" class="text-danger"></span>
-    </div>
 
-    <button type="submit">Continue</button>
-</form>
+
+<div class="onboarding">
+
+	<div class="onboarding-top-section">
+
+		<div class="onboarding-back">
+			<a asp-controller="Onboarding" asp-action="OnboardingCurrentWeight">
+				<i class="fa-solid fa-chevron-left"></i>
+			</a>
+		</div>
+
+
+		<div class="progress-container">
+			<div class="progress-bar" style="width: 50%;"></div>
+		</div>
+
+
+		<div>
+		</div>
+	</div>
+
+
+	<div class="goal-weight">
+
+
+		<form asp-action="OnboardingGoalWeight" method="post" class="goal-weight-form">
+
+
+			<div class="goal-weight-input">
+
+				<label for="goalWeightRange" id="goal-weight-question">What is your goal weight?</label>
+
+				<input type="range" asp-for="GoalWeight" class="blue-slider styled-slider"
+					   id="goalWeightRange" min="30" max="200" step="1"
+					   oninput="document.getElementById('weightValue').innerText = this.value" />
+
+				<label for="goalWeightRange" id="goal-weight-value"><span id="weightValue">@Model.GoalWeight</span>kg</label>
+
+				<span asp-validation-for="GoalWeight" class="text-danger"></span>
+			</div>
+
+
+			<div class="goal-weight-submit">
+				<button type="submit" class="nomie-btn">Continue</button>
+			</div>
+		</form>
+
+	</div>
+</div>
+
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+
 }
+

@@ -1,73 +1,119 @@
 ﻿@model HealthApp.ViewModels.Onboarding.Walkthrough2ViewModel
 
 @{
-    ViewData["Title"] = "Your Calorie Goal";
-    var minMonths = 3;
-    var maxMonths = 24;
+	ViewData["Title"] = "Your Calorie Goal";
+	var minMonths = 3;
+	var maxMonths = 24;
 }
 
-<div class="max-w-xl mx-auto text-center">
-    <h2 class="text-2xl font-semibold mb-4">Your Daily Calorie Goal</h2>
+@section Styles {
+	<link rel="stylesheet" href="~/css/onboarding.css" />
+}
 
-    <p class="mb-4">
-        Based on your current and goal weight, to reach your goal in
-        <span id="month-label">@Model.TimelineMonths</span> month(s),
-        you need to consume:
-    </p>
 
-    <h1 class="text-3xl font-bold text-blue-600 mb-6">
-        <span id="calorie-goal">@Model.RecommendedCalories</span> calories/day
-    </h1>
 
-    <form asp-action="OnboardingWalkthrough2" method="post">
-        <input type="hidden" asp-for="TDEE" />
-        <input type="hidden" asp-for="StartingWeight" />
-        <input type="hidden" asp-for="GoalWeight" />
-        <input type="hidden" asp-for="GoalType" />
-        <input type="hidden" id="recommendedCalories" name="RecommendedCalories" value="@Model.RecommendedCalories" />
 
-        <label for="timeline-slider" class="font-medium">Goal Timeline (months):</label>
-        <input type="range"
-               id="timeline-slider"
-               name="TimelineMonths"
-               min="@minMonths"
-               max="@maxMonths"
-               value="@Model.TimelineMonths"
-               class="w-full mt-2 mb-6" />
+<div class="onboarding">
 
-        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded shadow">
-            Continue
-        </button>
-    </form>
+
+	<div class="onboarding-top-section">
+		<div class="onboarding-back">
+			<a asp-controller="Onboarding" asp-action="OnboardingWalkthrough3">
+				<i class="fa-solid fa-chevron-left"></i>
+			</a>
+		</div>
+		<div class="progress-container">
+			<div class="progress-bar" style="width: 80%;"></div>
+		</div>
+
+		<div></div>
+	</div>
+
+
+	<div class="calorie-goal">
+
+		<div class="calorie-goal-top">
+
+			<h2 class="calorie-goal-title">Calorie Calculator</h2>
+
+			<p class="calorie-goal-text">
+				Based on your current and goal weight, to reach your goal in<strong>
+					<span id="month-label">@Model.TimelineMonths</span> month(s)
+				</strong>,
+				you need to consume:
+			</p>
+
+			<h1 class="calorie-goal-value">
+				<span id="calorie-goal">@Model.RecommendedCalories</span> calories/day
+			</h1>
+
+			@Html.ValidationSummary(true, "", new { @class = "text-red-500 mb-4" })
+
+		</div>
+
+		<form asp-action="OnboardingWalkthrough2" method="post" class="calorie-goal-form">
+			<div class="calorie-goal-input">
+				<input type="hidden" asp-for="TDEE" />
+				<input type="hidden" asp-for="StartingWeight" />
+				<input type="hidden" asp-for="GoalWeight" />
+				<input type="hidden" asp-for="GoalType" />
+				<input type="hidden" asp-for="RecommendedCalories" id="recommendedCalories" />
+
+				<label for="timeline-slider" class="font-medium">Goal Timeline (months)</label>
+				<input type="range"
+					   asp-for="TimelineMonths"
+					   id="timeline-slider"
+					   min="@minMonths"
+					   max="@maxMonths"
+					   class="blue-slider styled-slider" />
+
+			</div>
+
+
+			<div class="calorie-goal-submit">
+
+				<button type="submit" class="nomie-btn">
+					Continue
+				</button>
+			</div>
+
+
+		</form>
+	</div>
 </div>
 
+
+
 @section Scripts {
-    <script>
-        const slider = document.getElementById("timeline-slider");
-        const monthLabel = document.getElementById("month-label");
-        const calorieGoalDisplay = document.getElementById("calorie-goal");
-        const recommendedInput = document.getElementById("recommendedCalories");
+	<script>
+		const slider = document.getElementById("timeline-slider");
+		const monthLabel = document.getElementById("month-label");
+		const calorieGoalDisplay = document.getElementById("calorie-goal");
+		const recommendedInput = document.getElementById("recommendedCalories");
 
-        const tdee = @Model.TDEE;
-        const start = @Model.StartingWeight;
-        const goal = @Model.GoalWeight;
-        const goalType = "@Model.GoalType".toLowerCase();
+		const tdee = parseFloat("@Model.TDEE");
+		const start = parseFloat("@Model.StartingWeight");
+		const goal = parseFloat("@Model.GoalWeight");
+		const goalType = "@Model.GoalType".toLowerCase();
 
-        slider.addEventListener("input", () => {
-            const months = parseInt(slider.value);
-            monthLabel.textContent = months;
+		function updateCalories() {
+			const months = parseInt(slider.value);
+			monthLabel.textContent = months;
 
-            const weightDiff = Math.abs(goal - start);
-            const totalCals = weightDiff * 7700;
-            const dailyAdjust = totalCals / (months * 30);
+			const weightDiff = Math.abs(goal - start);
+			const totalCals = weightDiff * 7700;
+			const dailyAdjust = totalCals / (months * 30);
 
-            let newGoal = tdee;
-            if (goalType === "lose") newGoal = tdee - dailyAdjust;
-            else if (goalType === "gain") newGoal = tdee + dailyAdjust;
+			let newGoal = tdee;
+			if (goalType === "lose") newGoal = tdee - dailyAdjust;
+			else if (goalType === "gain") newGoal = tdee + dailyAdjust;
 
-            const roundedGoal = Math.round(newGoal);
-            calorieGoalDisplay.textContent = roundedGoal;
-            recommendedInput.value = roundedGoal;
-        });
-    </script>
+			const roundedGoal = Math.max(0, Math.round(newGoal));
+			calorieGoalDisplay.textContent = roundedGoal;
+			recommendedInput.value = roundedGoal;
+		}
+
+		slider.addEventListener("input", updateCalories);
+		updateCalories();
+	</script>
 }

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using HealthApp.Data;
 using HealthApp.Helpers;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using HealthApp.ViewModels;
 
 namespace HealthApp.Controllers
 {
@@ -33,39 +34,41 @@ namespace HealthApp.Controllers
             return View();
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Index(string email, string password)
+        public async Task<IActionResult> Index(LoginViewModel model)
         {
-            string hashedPassword = PasswordHelper.HashPassword(password);
+            if (!ModelState.IsValid)
+                return View(model); // Show "email required", etc.
+
+            string hashedPassword = PasswordHelper.HashPassword(model.Password);
 
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == email && u.Password == hashedPassword);
+                .FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == hashedPassword);
 
-            if (user != null)
+            if (user == null)
             {
-                var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, user.Name),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString())
-        };
-
-                var identity = new ClaimsIdentity(claims, "MyCookieAuth");
-                var principal = new ClaimsPrincipal(identity);
-
-                await HttpContext.SignInAsync("MyCookieAuth", principal);
-
-                // ✅ Fetch the user profile to check onboarding status
-                var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == user.UserID);
-
-                if (profile != null && !profile.OnboardingComplete)
-                    return RedirectToAction("OnboardingWelcome", "Onboarding");
-                else
-                    return RedirectToAction("Index", "Dashboard");
+                ModelState.AddModelError(string.Empty, "Invalid credentials");
+                return View(model); // 🔥 this must pass `model` back
             }
 
-            ViewBag.Error = "Invalid credentials";
-            return View();
+            // Authentication logic
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, user.Name),
+        new Claim(ClaimTypes.Email, user.Email),
+        new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString())
+    };
+
+            var identity = new ClaimsIdentity(claims, "MyCookieAuth");
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync("MyCookieAuth", principal);
+
+            var profile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserID == user.UserID);
+            if (profile != null && !profile.OnboardingComplete)
+                return RedirectToAction("OnboardingWelcome", "Onboarding");
+
+            return RedirectToAction("Index", "Dashboard");
         }
 
 
@@ -75,10 +78,6 @@ namespace HealthApp.Controllers
             await HttpContext.SignOutAsync("MyCookieAuth");
             return RedirectToAction("Index", "Landing");
         }
-
-
-
-
 
 
     }

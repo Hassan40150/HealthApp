@@ -5,8 +5,8 @@ namespace HealthApp.ViewModels.Onboarding
 {
     public class OnboardingAgeViewModel
     {
-        [Required(ErrorMessage = "Age is required.")]
-        [Range(10, 120, ErrorMessage = "Please enter a valid age between 10 and 120.")]
+        [Required(ErrorMessage = "Age is required")]
+        [Range(10, 120, ErrorMessage = "Please enter a valid age")]
         public int Age { get; set; }
     }
 }

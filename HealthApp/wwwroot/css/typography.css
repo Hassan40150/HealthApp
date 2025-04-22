@@ -1,3 +1,7 @@
-﻿body {
-}
+﻿/* Typography for project */
 
+
+.text-danger { 
+    color: #FF6666 !important;
+    font-size: 0.9rem;
+}

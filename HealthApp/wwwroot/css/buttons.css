@@ -1,2 +1,77 @@
-﻿body {
+﻿/* Buttons for project */
+
+.btn-primary {
+    background-color: #49BDF8;
+    border-color: #ffffff00;
+    outline: none;
+    box-shadow: none;
+    transition: none;
 }
+
+    .btn-primary:focus {
+        background-color: #49BDF8;
+        border-color: #ffffff00;
+        outline: none;
+        box-shadow: none;
+        transition: none;
+    }
+
+    .btn-primary:active {
+        background-color: #49BDF8;
+        border-color: #ffffff00;
+        outline: none;
+        box-shadow: none;
+        transition: none;
+    }
+
+.primary:active:focus {
+    background-color: #49BDF8;
+    border-color: #ffffff00;
+    outline: none;
+    box-shadow: none;
+    transition: none;
+}
+
+.primary-btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important; 
+}
+
+.btn-check:active + .btn-primary:focus, .btn-check:checked + .btn-primary:focus, .btn-primary.active:focus, .btn-primary:active:focus, .show > .btn-primary.dropdown-toggle:focus {
+    outline: #49BDF8 !important;
+    box-shadow: none !important;
+    border: #49BDF8 !important; 
+}
+
+
+/* MAIN BLUE BUTTON */
+
+.nomie-btn {
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 3.3rem;
+    background-color: #49BDF8;
+    border-radius: 5rem;
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 400;
+    align-items: center;
+}
+
+    .nomie-btn:hover {
+        background-color: #49BDF8;
+        border-color: #ffffff00;
+        color: white;
+        outline: none;
+        box-shadow: none;
+    }
+
+    .nomie-btn:active {
+        background-color: #49BDF8;
+        border-color: #ffffff00;
+        color: white;
+        outline: none;
+        box-shadow: none;
+    }

@@ -1,14 +1,19 @@
-﻿@import "typography.css";
+﻿@import "fonts.css";
 @import "buttons.css";
-
+@import "typography.css";
+@import "components.css";
 
 * {
-    background-color: #121212;
-    color: #ffffff;
+    font-family: 'Overpass';
 }
 
 
 body {
     background-color: #121212;
     color: #ffffff;
+    font-family: 'Overpass';
+}
+
+.base-main {
+    height: 100vh;
 }

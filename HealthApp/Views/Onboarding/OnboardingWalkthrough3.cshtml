@@ -1,25 +1,75 @@
 ﻿@model HealthApp.ViewModels.Onboarding.Walkthrough3ViewModel
-
-@{
-    ViewData["Title"] = "Hydration Summary";
+@section Styles {
+	<link rel="stylesheet" href="~/css/onboarding.css" />
 }
 
-<div class="max-w-xl mx-auto text-center">
-    <h2 class="text-2xl font-semibold mb-4">Hydration Summary</h2>
 
-    <div class="mb-4">
-        <p><strong>Your recommended hydration:</strong> @Model.RecommendedMl mL</p>
-        <p><strong>Your actual intake:</strong> @Model.ActualIntakeMl mL</p>
-        <p><strong>Typical water loss per day:</strong> @Model.TypicalLossMl mL</p>
-    </div>
 
-    <div class="bg-gray-100 text-sm p-4 rounded mb-6">
-        @Model.HydrationFeedback
-    </div>
 
-    <form asp-action="OnboardingWalkthrough3Post" method="post">
-        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded shadow">
-            Finish & Go to Dashboard
-        </button>
-    </form>
+<div class="onboarding">
+
+	<div class="onboarding-top-section">
+
+		<div class="onboarding-back">
+			<a asp-controller="Onboarding" asp-action="OnboardingWaterIntake">
+				<i class="fa-solid fa-chevron-left"></i>
+			</a>
+		</div>
+
+
+		<div class="progress-container">
+			<div class="progress-bar" style="width: 70%;"></div>
+		</div>
+
+		<div>
+		</div>
+	</div>
+
+	<div class="hydration">
+
+
+
+		<div class="hydration-summary">
+
+
+			<h2 id="hydration-title">Hydration Summary</h2>
+
+			<div class="hydration-subtitle">
+				@Model.HydrationFeedback
+			</div>
+
+
+			<div class="hydration-table">
+				<div class="hydration-row">
+					<p>Your recommended hydration</p>
+					<p id ="hydration-border">@Model.RecommendedMl mL</p>
+				</div>
+
+				<div class="hydration-row">
+					<p>Your actual intake</p>
+					<p id="hydration-border">@Model.ActualIntakeMl mL</p>
+				</div>
+
+				<div class="hydration-row">
+					<p>Typical water loss per day</p>
+					<p id="hydration-border">@Model.TypicalLossMl mL</p>
+				</div>
+			</div>
+
+
+		</div>
+
+
+		<form asp-action="OnboardingWalkthrough2" method="get">
+
+
+			<button type="submit" class="nomie-btn">
+				Continue
+			</button>
+		</form>
+
+
+	</div>
 </div>
+
+

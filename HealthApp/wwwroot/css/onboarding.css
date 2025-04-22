@@ -1,0 +1,637 @@
+﻿.onboarding {
+    padding: 4rem 2rem;
+    height: 100%;
+}
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.welcome-message {
+    padding-top: 2rem;
+}
+
+    .welcome-message > h3 {
+        font-size: 1.15rem;
+        font-weight: 250;
+    }
+
+
+/* AGE */
+
+.age {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.age-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.age-input {
+    display: flex;
+    flex-direction: column;
+    padding-top: 8rem;
+    font-size: 1.1rem;
+}
+
+    .age-input > label {
+        font-size: 1.15rem;
+    }
+
+.age-submit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/* GENDER */
+
+.gender {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gender-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.gender-input {
+    display: flex;
+    flex-direction: column;
+    padding-top: 8rem;
+    font-size: 1.1rem;
+    gap: 1.1rem;
+}
+
+
+    .gender-input > label {
+        font-size: 1.15rem;
+    }
+
+
+.gender-submit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.gender-container {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    font-size: 1.15rem;
+    color: white;
+}
+
+.custom-radio {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+    .custom-radio input[type="radio"] {
+        display: none;
+    }
+
+.radio-circle {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 6px solid white;
+    background-color: #bdbdbd;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.custom-radio input[type="radio"]:checked + .radio-circle {
+    background-color: #ffffff;
+    border-color: #49BDF8;
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+
+/* HEIGHT */
+
+.height {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.height-form {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.height-submit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.height-input {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding-top: 8rem;
+    font-size: 1.1rem;
+    gap: 1.1rem;
+}
+
+    .height-input > label {
+        font-size: 1.15rem;
+    }
+
+
+#height-question {
+    padding-bottom: 2rem;
+}
+
+#height-value {
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* CURRENT WEIGHT */
+
+#current-weight-tip {
+    font-size: 0.7rem;
+    color: #868686;
+    padding-bottom: 2rem;
+}
+
+.weight-question {
+    padding-bottom: 0rem;
+}
+
+.current-weight {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.current-weight-form {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.current-weight-submit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.current-weight-input {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding-top: 8rem;
+    font-size: 1.1rem;
+    gap: 1.1rem;
+}
+
+    .current-weight-input > label {
+        font-size: 1.15rem;
+    }
+
+
+#current-weight-question {
+    padding-bottom: 2rem;
+}
+
+#current-weight-value {
+    font-size: 1rem;
+    text-align: center;
+}
+
+
+
+/* GOAL WEIGHT */
+
+
+.weight-question {
+    padding-bottom: 0rem;
+}
+
+.goal-weight {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.goal-weight-form {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.goal-weight-submit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.goal-weight-input {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding-top: 8rem;
+    font-size: 1.1rem;
+    gap: 1.1rem;
+}
+
+    .goal-weight-input > label {
+        font-size: 1.15rem;
+    }
+
+
+#goal-weight-question {
+    padding-bottom: 2rem;
+}
+
+#goal-weight-value {
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* ACTIVITY LEVEL */
+
+.activity-level-bar {
+    width: 15px;
+    background-color: #ffff;
+    transition: background-color 0.3s;
+    align-self: flex-end;
+}
+
+.activity-level-bars {
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 2rem;
+}
+
+#bar1 {
+    height: 25px;
+}
+
+#bar2 {
+    height: 45px;
+}
+
+#bar3 {
+    height: 65px;
+}
+
+#bar4 {
+    height: 85px;
+}
+
+.activity-level-bar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 90px;
+    margin-bottom: 15px;
+    gap: 5px;
+}
+
+.activity-level-question {
+    padding-bottom: 0rem;
+}
+
+.activity-level {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.activity-level-form {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.activity-level-submit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.activity-level-input {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding-top: 8rem;
+    font-size: 1.1rem;
+    gap: 1.1rem;
+}
+
+    .activity-level-input > label {
+        font-size: 1.15rem;
+    }
+
+
+#activity-level-question {
+    padding-bottom: 2rem;
+}
+
+#activity-level-value {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.activity-label {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+    font-weight: 400;
+}
+
+
+/* HYDRATION WATER INTAKE */
+
+
+.drink-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.drink-label {
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+.drink-label > p {
+    color: red;
+}
+
+.drink-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+}
+
+    .drink-controls button {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5rem;
+    }
+
+    .drink-controls input {
+        width: 40px;
+        text-align: center;
+        border: none;
+        background: #00000000;
+        font-weight: 500;
+        color: white;
+        font-size: 16px;
+    }
+
+
+.drink {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.drink-form {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drink-flex {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.drink-input {
+    width: 100%;
+    padding-top: 2rem;
+    font-size: 1.1rem;
+    gap: 0.8rem;
+}
+
+#drink-question {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.small, small {
+    font-size: 0.7rem;
+    color: #6E6E6E;
+}
+
+/* HYDRATION */
+
+.hydration {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hydration-summary {
+    display: flex;
+    padding-top: 4rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hydration-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 0.9rem;
+    padding-bottom: 2rem;
+    font-weight: 300;
+}
+
+.hydration-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#hydration-title {
+    font-size: 1.15rem;
+    padding-bottom: 2rem;
+    font-weight: 600;
+}
+
+.hydration-subtitle {
+    font-size: 1rem;
+    padding-bottom: 4rem;
+    text-align: center;
+    font-weight: 300;
+}
+
+.hydration-border {
+    border-left: solid 1px white;
+    padding-left: 1rem;
+}
+
+/* CALORIE GOAL */
+
+.calorie-goal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    font-weight: 300;
+    padding-top: 2rem;
+}
+
+.calorie-goal-top {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    align-items: center;
+}
+
+.calorie-goal-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calorie-goal-input {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column-reverse;
+    width: 100%;
+    align-items: center;
+}
+
+.calorie-goal-input > label {
+    padding-top: 1rem;
+}
+
+.calorie-goal-title {
+    font-size: 1.2rem;
+    padding-bottom: 1.5rem; 
+}
+
+.calorie-goal-text {
+    font-size: 1rem;
+    text-align: center;
+    padding-bottom: 3rem;
+}
+
+.calorie-goal-text > strong {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.calorie-goal-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding-bottom: 3rem;
+
+}
+
+/* COMPLETE ONBOARDING */
+
+.complete-onboarding {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 2rem;
+    align-items: center;
+}
+
+.complete-onboarding-cards {
+    width: 100%;
+    height: 100%;
+    background: #242424;
+    border-radius: 0.9rem;
+    padding: 1.15rem;
+    font-weight: 300;
+}
+
+.complete-onboarding-cards > h1 {
+    font-size: 1.15rem;
+}
+
+    .complete-onboarding-cards > p {
+        font-size: 0.9rem;
+    }
