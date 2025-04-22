@@ -1,22 +1,155 @@
 ﻿@model HealthApp.Models.Users
-
-
-
-@{
-    ViewData["Title"] = "Dashboard";
+@section Styles {
+	<link rel="stylesheet" href="~/css/dashboard.css" />
 }
 
-
+@* 
 <a asp-controller="Login" asp-action="Logout">
 	<i class="fa-solid fa-chevron-left"></i>
 </a>
 
-
-<h1>@ViewData["Title"]</h1>
-
-
 <p><strong>User ID:</strong> @Model.UserID</p>
 <p><strong>Name:</strong> @Model.Name</p>
 <p><strong>Email:</strong> @Model.Email</p>
+ *@
+
+<!-- JUST DO NON WORKING LAYOUT OBVIOUSLY... -->
+
+<div class="dashboard">
+
+	<div class="dashboard-nav">
+
+		<div class="dashboard-nav-title-flex">
+			<div class="dashboard-nav-title">
+				<h1>Dashboard</h1>
+			</div>
+			<div class="dashboard-nav-subtitle">
+				<h3>Hi Hassan</h3>
+			</div>
+
+		</div>
+
+		<a asp-area="" asp-controller="Dashboard" asp-action="Index" class="profile-link">
+			<div class="profile">
+				<p id="profile-letter">H</p>
+			</div>
+		</a>
+	</div>
 
 
+	<div class="dashboard-calendar">
+
+		<div class="calendar">
+			<div class="calendar-week">
+				<div class="calendar-circle">
+					<p class="calendar-day">M</p>
+				</div>
+				<span class="calendar-indicator"></span>
+			</div>
+
+			<div class="calendar-week">
+				<div class="calendar-circle">
+					<p class="calendar-day">T</p>
+				</div>
+				<span class="calendar-indicator"></span>
+			</div>
+
+			<div class="calendar-week">
+				<div class="calendar-circle">
+					<p class="calendar-day">W</p>
+				</div>
+				<span class="calendar-indicator"></span>
+			</div>
+
+			<div class="calendar-week">
+				<div class="calendar-circle">
+					<p class="calendar-day">T</p>
+				</div>
+				<span class="calendar-indicator"></span>
+			</div>
+
+			<div class="calendar-week">
+				<div class="calendar-circle">
+					<p class="calendar-day">F</p>
+				</div>
+				<span class="calendar-indicator"></span>
+			</div>
+
+			<div class="calendar-week">
+				<div class="calendar-circle">
+					<p class="calendar-day">S</p>
+				</div>
+				<span class="calendar-indicator"></span>
+			</div>
+
+			<div class="calendar-week">
+				<div class="calendar-circle">
+					<p class="calendar-day">S</p>
+				</div>
+				<span class="calendar-indicator"></span>
+			</div>
+		</div>
+
+		<div class="calendar-CTA">
+
+
+			<a asp-area="" asp-controller="Dashboard" asp-action="Index" class="streaks-link">
+				<p>Streaks</p>
+				<i class="fa-solid fa-chevron-right"></i>
+			</a>
+
+
+
+		</div>
+
+
+	</div>
+
+
+
+
+
+
+
+
+	<div class="dashboard-content">
+
+		<div class="content-title">Tracking</div>
+
+		<div class="content">
+			<div class="content-long-cards">
+
+				<div class="long-card">
+				</div>
+
+				<div class="long-card">
+				</div>
+
+				<div class="long-card">
+				</div>
+
+			</div>
+
+
+			<div class="content-tall-cards">
+
+				<div class="tall-card"></div>
+				<div class="tall-card"></div>
+
+
+			</div>
+
+
+		</div>
+	</div>
+
+
+
+
+
+
+	<div class="dashboard-CTA">
+		<button asp-action="#" class="nomie-btn">Check In</button>
+	</div>
+
+</div>
