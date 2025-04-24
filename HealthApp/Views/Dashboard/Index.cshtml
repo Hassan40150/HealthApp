@@ -119,25 +119,134 @@
 		<div class="content">
 			<div class="content-long-cards">
 
-				<div class="long-card">
-					Weight
-				</div>
+				<a asp-area="" asp-controller="Dashboard" asp-action="Index" class="card-link">
+					<div class="long-card">
+						<div class="long-card-left-content">
+							<span class="long-card-indicator"></span>
+							<div class="long-card-text">
+								<h3 class="long-card-title">Weight</h3>
+								<p class="long-card-subtitle">Current: </p>
+								<p class="long-card-subtitle">Goal: </p>
+							</div>
+						</div>
 
-				<div class="long-card">
-					Calories
-				</div>
 
-				<div class="long-card">
-					Hydration
-				</div>
+
+						<div class="long-card-right-content">
+							<div class="long-card-progress">
+								<div class="progress-container">
+									<div class="progress-bar" style="width: 10%;"></div>
+								</div>
+							</div>
+
+							<div class="long-card-chevron">
+								<i class="fa-solid fa-chevron-right"></i>
+							</div>
+						</div>
+
+					</div>
+				</a>
+
+
+
+
+				<a asp-area="" asp-controller="Dashboard" asp-action="Index" class="card-link">
+					<div class="long-card">
+						<div class="long-card-left-content">
+							<span class="long-card-indicator"></span>
+							<div class="long-card-text">
+								<h3 class="long-card-title">Calories</h3>
+								<p class="long-card-subtitle">700/2000cal</p>
+							</div>
+						</div>
+
+
+						<div class="long-card-right-content">
+
+							<div class="long-card-progress">
+								<div class="progress-container">
+									<div class="progress-bar" style="width: 70%;"></div>
+								</div>
+							</div>
+
+							<div class="long-card-chevron">
+								<i class="fa-solid fa-chevron-right"></i>
+							</div>
+						</div>
+					</div>
+				</a>
+
+
+
+
+
+				<a asp-area="" asp-controller="Dashboard" asp-action="Index" class="card-link">
+					<div class="long-card">
+						<div class="long-card-left-content">
+							<span class="long-card-indicator"></span>
+							<div class="long-card-text">
+								<h3 class="long-card-title">Hydration</h3>
+								<p class="long-card-subtitle">3600/3500ml</p>
+							</div>
+						</div>
+
+
+						<div class="long-card-right-content">
+
+							<div class="long-card-progress">
+								<div class="progress-container">
+									<div class="progress-bar" style="width: 10%;"></div>
+								</div>
+							</div>
+
+							<div class="long-card-chevron">
+								<i class="fa-solid fa-chevron-right"></i>
+							</div>
+						</div>
+					</div>
+				</a>
+
+
+
 
 			</div>
 
 
 			<div class="content-tall-cards">
-				<div class="tall-card"></div>
-				<div class="tall-card"></div>
+
+
+
+				<div class="tall-card">
+					<div class="tall-card-title">Biometrics</div>
+					<div class="tall-card-subtitle">BMI: 24.5</div>
+					<div class="tall-card-subtitle">Your Healthy</div>
+
+					<div class="bmi-slider">
+						<div class="bmi-slider-thumb"></div>
+
+						<div class="bmi-slider-track">
+						</div>
+					</div>
+
+					<div class="tall-card-subtitle">Age: 22</div>
+					<div class="tall-card-subtitle">Height: 150cm</div>
+					<div class="tall-card-subtitle">Weight: 64kg</div>
+				</div>
+
+				<a asp-area="" asp-controller="Dashboard" asp-action="Index" class="card-link">
+
+					<div class="tall-card">
+						<div class="tall-card-title" id="journal-title">Your Journal</div>
+						<div class="tall-card-subtitle">Track your reflections and notes throughout your health journey.</div>
+						<div class="tall-card-chevron">
+							<i class="fa-solid fa-chevron-right"></i>
+						</div>
+					</div>
+				</a>
+		
+
 			</div>
+
 
 		</div>
 	</div>
