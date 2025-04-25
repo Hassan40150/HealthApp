@@ -1,4 +1,5 @@
 using System.Configuration;
+using HealthApp.Services;
 using Microsoft.Extensions.Options;
 
 
@@ -27,6 +28,13 @@ builder.Services.AddAuthentication("MyCookieAuth")
     });
 
 builder.Services.AddAuthorization();
+
+
+
+// Add services
+builder.Services.AddScoped<OnboardingService>();
+
+
 
 
 
