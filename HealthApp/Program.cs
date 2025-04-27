@@ -33,6 +33,8 @@ builder.Services.AddAuthorization();
 
 // Add services
 builder.Services.AddScoped<OnboardingService>();
+builder.Services.AddScoped<CheckInService>();
+builder.Services.AddScoped<StreaksService>();
 
 
 

@@ -1,0 +1,103 @@
+﻿@model HealthApp.ViewModels.CheckInViewModel
+@section Styles {
+	<link rel="stylesheet" href="~/css/dashboard.css" />
+}
+
+<h2>Daily Check-In</h2>
+
+<!-- Weight Input -->
+<div>
+	<label>Weight (kg):</label><br />
+	<input id="weightInput" type="number" step="0.1" onblur="submitWeight()" />
+</div>
+
+<!-- Calories Section -->
+<div>
+	<div>Calories: <span id="currentCalories"></span> / <span id="calorieGoal"></span></div>
+	<div>
+		<button onclick="adjustCalories(50)">+50</button>
+		<button onclick="adjustCalories(100)">+100</button>
+		<button onclick="adjustCalories(500)">+500</button>
+		<button onclick="adjustCalories(1000)">+1000</button><br />
+		<button onclick="adjustCalories(-50)">-50</button>
+		<button onclick="adjustCalories(-100)">-100</button>
+		<button onclick="adjustCalories(-500)">-500</button>
+		<button onclick="adjustCalories(-1000)">-1000</button>
+	</div>
+</div>
+
+<!-- Water Section -->
+<div>
+	<div>Water: <span id="currentWater"></span> / <span id="waterGoal"></span> ml</div>
+	<div>
+		<button onclick="adjustWater(50)">+50</button>
+		<button onclick="adjustWater(100)">+100</button>
+		<button onclick="adjustWater(500)">+500</button>
+		<button onclick="adjustWater(1000)">+1000</button><br />
+		<button onclick="adjustWater(-50)">-50</button>
+		<button onclick="adjustWater(-100)">-100</button>
+		<button onclick="adjustWater(-500)">-500</button>
+		<button onclick="adjustWater(-1000)">-1000</button>
+	</div>
+</div>
+
+<script>
+	let currentCalories = 0;
+	let currentWater = 0;
+
+	async function loadData() {
+		const response = await fetch('/CheckIn/GetCheckInData');
+		const data = await response.json();
+
+		currentCalories = data.calories || 0;
+		currentWater = Math.round((data.water || 0) * 1000); // Assuming your DB stores water in Liters
+
+		document.getElementById('weightInput').value = data.weight ?? '';
+		document.getElementById('currentCalories').textContent = currentCalories;
+		document.getElementById('calorieGoal').textContent = data.calorieGoal || 0;
+		document.getElementById('currentWater').textContent = currentWater;
+		document.getElementById('waterGoal').textContent = data.waterGoal || 0;
+	}
+
+		function adjustCalories(amount) {
+		const newCalories = currentCalories + amount;
+		if (newCalories < 0) return; // don't allow below zero
+
+		currentCalories = newCalories;
+		document.getElementById('currentCalories').textContent = currentCalories;
+
+		fetch('/CheckIn/UpdateCalories', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: `amount=${amount}`
+		});
+	}
+
+	function adjustWater(amount) {
+		const newWater = currentWater + amount;
+		if (newWater < 0) return; // don't allow below zero
+
+		currentWater = newWater;
+		document.getElementById('currentWater').textContent = currentWater;
+
+		fetch('/CheckIn/UpdateWater', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: `amount=${amount}`
+		});
+	}
+
+
+	 function submitWeight() {
+		const weight = document.getElementById('weightInput').value;
+		fetch('/CheckIn/UpdateWeight', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: `weight=${weight}`
+		})
+		.then(() => loadData()); // Refresh after saving weight
+	}
+
+
+	window.onload = loadData;
+</script>
