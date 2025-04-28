@@ -1,4 +1,6 @@
 ﻿using HealthApp.Data;
+using HealthApp.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthApp.Services
 {
@@ -13,7 +15,6 @@ namespace HealthApp.Services
 
         public async Task MarkStreakIfCompleteAsync(int userId)
         {
-
             var today = DateTime.UtcNow.Date;
 
             var streak = await _context.Streaks
@@ -45,8 +46,7 @@ namespace HealthApp.Services
             {
                 if (streak == null)
                 {
-                    // No streak yet ➔ create it
-                    _context.Streaks.Add(new Streaks
+                    _context.Streaks.Add(new Models.Streaks
                     {
                         UserID = userId,
                         Timestamp = today,
@@ -55,7 +55,6 @@ namespace HealthApp.Services
                 }
                 else if (!streak.Completed)
                 {
-                    // Streak exists but was not completed ➔ update to completed
                     streak.Completed = true;
                     _context.Streaks.Update(streak);
                 }
@@ -64,7 +63,6 @@ namespace HealthApp.Services
             {
                 if (streak != null)
                 {
-                    // Streak exists but user fell below goal ➔ delete the streak
                     _context.Streaks.Remove(streak);
                 }
             }
@@ -72,5 +70,77 @@ namespace HealthApp.Services
             await _context.SaveChangesAsync();
         }
 
+        // ✅ NEW METHOD (added cleanly)
+        public async Task<StreaksViewModel> GetStreaksAsync(int userId)
+        {
+            var streakDays = await _context.Streaks
+                .Where(s => s.UserID == userId && s.Completed)
+                .OrderBy(s => s.Timestamp)
+                .Select(s => s.Timestamp.Date)
+                .ToListAsync();
+
+            if (!streakDays.Any())
+            {
+                return new StreaksViewModel
+                {
+                    CurrentStreakLength = 0,
+                    LongestStreakLength = 0
+                };
+            }
+
+            // Calculate longest streak
+            int longest = 1;
+            int current = 1;
+            int maxCurrent = 1;
+            DateTime? longestStart = streakDays[0];
+            DateTime? longestEnd = streakDays[0];
+            DateTime? tempStart = streakDays[0];
+            DateTime? currentStart = streakDays[0];
+
+            for (int i = 1; i < streakDays.Count; i++)
+            {
+                if ((streakDays[i] - streakDays[i - 1]).TotalDays == 1)
+                {
+                    current++;
+                }
+                else
+                {
+                    if (current > longest)
+                    {
+                        longest = current;
+                        longestStart = tempStart;
+                        longestEnd = streakDays[i - 1];
+                    }
+                    current = 1;
+                    tempStart = streakDays[i];
+                }
+
+                if ((streakDays[i] - streakDays[i - 1]).TotalDays == 1 && streakDays[i] == DateTime.UtcNow.Date)
+                {
+                    maxCurrent = current;
+                    currentStart = tempStart;
+                }
+            }
+
+            // Final check in case current longest is at end
+            if (current > longest)
+            {
+                longest = current;
+                longestStart = tempStart;
+                longestEnd = streakDays.Last();
+            }
+
+            // Determine if current streak is active today
+            bool isCurrentlyStreaking = streakDays.Last() == DateTime.UtcNow.Date;
+
+            return new StreaksViewModel
+            {
+                CurrentStreakLength = isCurrentlyStreaking ? maxCurrent : 0,
+                CurrentStreakStartDate = isCurrentlyStreaking ? currentStart : null,
+                LongestStreakLength = longest,
+                LongestStreakStartDate = longestStart,
+                LongestStreakEndDate = longestEnd
+            };
+        }
     }
 }
