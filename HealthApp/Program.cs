@@ -36,6 +36,7 @@ builder.Services.AddScoped<OnboardingService>();
 builder.Services.AddScoped<CheckInService>();
 builder.Services.AddScoped<StreaksService>();
 builder.Services.AddScoped<SettingsService>();
+builder.Services.AddScoped<WeightService>();
 
 
 
