@@ -39,6 +39,7 @@ builder.Services.AddScoped<SettingsService>();
 builder.Services.AddScoped<WeightService>();
 builder.Services.AddScoped<CaloriesService>();
 builder.Services.AddScoped<WaterService>();
+builder.Services.AddScoped<JournalService>();
 
 
 
