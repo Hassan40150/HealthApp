@@ -1,0 +1,73 @@
+﻿@model HealthApp.ViewModels.Settings.UserSettingsViewModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" />
+}
+
+<div class="profile">
+    <div class="onboarding-top-section">
+        <div class="onboarding-back">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+        </div>
+
+        <div>
+            <h1>User Settings</h1>
+        </div>
+
+        <div></div>
+    </div>
+</div>
+
+<div class="onboarding-content">
+    <form asp-action="UserSettings" method="post" class="onboarding-form">
+        <validation-summary model-only="true" class="text-danger"></validation-summary>
+
+        <!-- Age input -->
+        <div class="form-group">
+            <label asp-for="Age">Age</label>
+            <input asp-for="Age" type="number" min="13" max="120" class="form-control" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+
+        <!-- Height with slider -->
+        <div class="form-group">
+            <label asp-for="HeightCm">Height: <span id="heightDisplay">@Model.HeightCm</span> cm</label>
+            <input asp-for="HeightCm" type="range" min="100" max="220" step="1" class="form-control-range" id="heightSlider" />
+            <span asp-validation-for="HeightCm" class="text-danger"></span>
+        </div>
+
+        <!-- Sex with radio buttons -->
+        <div class="form-group">
+            <label>Sex</label>
+            <div>
+                <input type="radio" asp-for="Sex" value="Male" id="male" />
+                <label for="male">Male</label>
+
+                <input type="radio" asp-for="Sex" value="Female" id="female" />
+                <label for="female">Female</label>
+            </div>
+            <span asp-validation-for="Sex" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        var heightSlider = document.getElementById("heightSlider");
+        var heightDisplay = document.getElementById("heightDisplay");
+
+        if (heightSlider && heightDisplay) {
+            heightSlider.addEventListener("input", function () {
+                heightDisplay.textContent = heightSlider.value;
+            });
+        }
+    </script>
+}

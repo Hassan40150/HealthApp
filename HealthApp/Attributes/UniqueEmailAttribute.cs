@@ -7,7 +7,7 @@ namespace HealthApp.Attributes
 
     public class UniqueEmailAttribute : ValidationAttribute
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
             var _context = validationContext.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
@@ -32,6 +32,7 @@ namespace HealthApp.Attributes
 
             return ValidationResult.Success!;
         }
+
     }
 
 }

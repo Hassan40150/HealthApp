@@ -1,0 +1,93 @@
+﻿@model HealthApp.ViewModels.Settings.SettingsViewModel
+@section Styles {
+	<link rel="stylesheet" href="~/css/profile.css" />
+}
+
+
+<div class="profile">
+	<div class="onboarding-top-section">
+
+		<div class="onboarding-back">
+			<a asp-controller="Dashboard" asp-action="Index">
+				<i class="fa-solid fa-chevron-left"></i>
+			</a>
+		</div>
+
+
+		<div>
+			<h1>Profile</h1>
+		</div>
+
+		<div>
+			<a asp-controller="Dashboard" asp-action="Index">
+				<i class="fa-solid fa-chevron-right"></i>
+			</a>
+		</div>
+	</div>
+
+
+	<h3>@Model.Username</h3>
+	<h3>@Model.Email</h3>
+	<h3>@Model.Age</h3>
+	<h3>@Model.HeightCm</h3>
+	<h3>@Model.Sex</h3>
+
+
+	<h1>Settings</h1>
+
+
+
+	<div class="content-long-cards">
+
+		<a asp-area="" asp-controller="Settings" asp-action="AccountSettings" class="card-link">
+			<div class="long-card">
+				<div class="long-card-left-content">
+					<div class="long-card-text">
+						<h3 class="long-card-title">Account</h3>
+					</div>
+				</div>
+
+				<div class="long-card-right-content">
+					<div class="long-card-chevron">
+						<i class="fa-solid fa-chevron-right"></i>
+					</div>
+				</div>
+			</div>
+		</a>
+
+		<a asp-area="" asp-controller="Settings" asp-action="UserSettings" class="card-link">
+			<div class="long-card">
+				<div class="long-card-left-content">
+					<div class="long-card-text">
+						<h3 class="long-card-title">User</h3>
+					</div>
+				</div>
+
+				<div class="long-card-right-content">
+					<div class="long-card-chevron">
+						<i class="fa-solid fa-chevron-right"></i>
+					</div>
+				</div>
+			</div>
+		</a>
+
+		<a asp-area="" asp-controller="Settings" asp-action="HealthSettings" class="card-link">
+			<div class="long-card">
+				<div class="long-card-left-content">
+					<div class="long-card-text">
+						<h3 class="long-card-title">Health</h3>
+					</div>
+				</div>
+
+				<div class="long-card-right-content">
+					<div class="long-card-chevron">
+						<i class="fa-solid fa-chevron-right"></i>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+
+
+	<h3>Support</h3>
+</div>

@@ -18,7 +18,7 @@
         public DbSet<Metrics> Metrics { get; set; }
         public DbSet<Journal> Journal { get; set; }
         public DbSet<Streaks> Streaks { get; set; }
-
+        public DbSet<DeletedAccounts> DeletedAccounts { get; set; }
 
     }
 }
