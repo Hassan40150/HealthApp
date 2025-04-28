@@ -26,21 +26,17 @@
 <!-- Modal -->
 <div id="entryModal" style="display: none; position: fixed; top: 20%; left: 50%; transform: translateX(-50%); background: white; padding: 20px; border: 1px solid black;">
     <textarea id="entryText" maxlength="280" rows="5" style="width: 100%;"></textarea>
-    <div>
+
+    <!-- 🔥 Hidden error div initially -->
+    <div id="entryError" style="color: red; margin-top: 5px; display: none;"></div>
+
+    <div style="margin-top: 10px;">
         <button id="submitEntryButton">Submit</button>
         <button id="closeModalButton">Close</button>
     </div>
 </div>
 
+
 <!-- JavaScript -->
 <script src="~/js/journal.js"></script>
 
-<script>
-    document.getElementById('addEntryButton').addEventListener('click', function () {
-        document.getElementById('entryModal').style.display = 'block';
-    });
-
-    document.getElementById('closeModalButton').addEventListener('click', function () {
-        document.getElementById('entryModal').style.display = 'none';
-    });
-</script>

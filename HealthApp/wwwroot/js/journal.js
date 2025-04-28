@@ -1,13 +1,22 @@
-﻿let skip = 10; // Already loaded 10 entries on page load
-const take = 10;
-let loading = false;
+﻿// Open and close modal
+document.getElementById('addEntryButton').addEventListener('click', function () {
+    document.getElementById('entryModal').style.display = 'block';
+});
 
-// Submit new entry
+document.getElementById('closeModalButton').addEventListener('click', function () {
+    document.getElementById('entryModal').style.display = 'none';
+});
+
+// Submit journal entry (with error handling inside modal)
 document.getElementById('submitEntryButton').addEventListener('click', async function () {
     const text = document.getElementById('entryText').value.trim();
+    const errorDiv = document.getElementById('entryError');
+    errorDiv.style.display = 'none'; // Hide error
+    errorDiv.innerText = '';
 
     if (text.length === 0 || text.length > 280) {
-        alert("Entry must be between 1 and 280 characters.");
+        errorDiv.innerText = "Entry must be between 1 and 280 characters.";
+        errorDiv.style.display = 'block';
         return;
     }
 
@@ -21,24 +30,26 @@ document.getElementById('submitEntryButton').addEventListener('click', async fun
         });
 
         if (response.ok) {
-            alert("Entry submitted!");
-
-            // Reset modal
             document.getElementById('entryText').value = '';
             document.getElementById('entryModal').style.display = 'none';
-
-            // Reload page to show new entry (easy way)
             location.reload();
         } else {
             const errorText = await response.text();
-            alert(errorText);
+            errorDiv.innerText = errorText;
+            errorDiv.style.display = 'block';
         }
     } catch (error) {
+        errorDiv.innerText = "Something went wrong.";
+        errorDiv.style.display = 'block';
         console.error('Error submitting entry:', error);
     }
 });
 
-// Infinite Scroll Load More
+// Infinite scroll to load more entries
+let skip = 10;
+const take = 10;
+let loading = false;
+
 async function loadMoreEntries() {
     if (loading) return;
     loading = true;
