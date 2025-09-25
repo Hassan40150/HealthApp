@@ -1,0 +1,103 @@
+﻿@model HealthApp.ViewModels.Settings.HealthSettingsViewModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" />
+}
+
+<div class="profile">
+    <div class="onboarding-top-section">
+        <div class="onboarding-back">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+        </div>
+
+        <div>
+            <h1>Health Settings</h1>
+        </div>
+
+        <div></div>
+    </div>
+</div>
+
+<div class="onboarding-content">
+    <form asp-action="HealthSettings" method="post" class="onboarding-form">
+        <validation-summary model-only="true" class="text-danger"></validation-summary>
+
+        <!-- Goal Weight -->
+        <div class="form-group">
+            <label asp-for="GoalWeight">Goal Weight (kg)</label>
+            <input asp-for="GoalWeight" type="number" step="0.1" class="form-control" id="goalWeightInput" />
+            <span asp-validation-for="GoalWeight" class="text-danger"></span>
+        </div>
+
+        <!-- Timeline -->
+        <div class="form-group">
+            <label asp-for="TimelineMonths">Goal Timeline: <span id="timelineLabel">@Model.TimelineMonths</span> months</label>
+            <input asp-for="TimelineMonths" type="range" min="3" max="24" id="timelineSlider" class="form-control-range" />
+            <span asp-validation-for="TimelineMonths" class="text-danger"></span>
+        </div>
+
+        <!-- Live Calorie Goal Display -->
+        <div class="form-group">
+            <label>Recommended Calories Per Day:</label>
+            <h3 id="calorieGoalDisplay">@Model.RecommendedCalories</h3>
+        </div>
+
+        <!-- Water Goal -->
+        <div class="form-group">
+            <label asp-for="WaterGoalMl">Water Goal (ml per day)</label>
+            <input asp-for="WaterGoalMl" type="number" step="100" class="form-control" />
+            <span asp-validation-for="WaterGoalMl" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+
+        <!-- Hidden fields for calculation -->
+        <input type="hidden" id="startingWeight" value="@Model.StartingWeight" />
+        <input type="hidden" id="tdee" value="@Model.TDEE" />
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const goalWeightInput = document.getElementById("goalWeightInput");
+        const timelineSlider = document.getElementById("timelineSlider");
+        const timelineLabel = document.getElementById("timelineLabel");
+        const calorieGoalDisplay = document.getElementById("calorieGoalDisplay");
+        const startingWeight = parseFloat(document.getElementById("startingWeight").value);
+        const tdee = parseFloat(document.getElementById("tdee").value);
+
+        function updateCalories() {
+            const goalWeight = parseFloat(goalWeightInput.value);
+            const months = parseInt(timelineSlider.value);
+
+            timelineLabel.textContent = months;
+
+            const weightDiff = Math.abs(goalWeight - startingWeight);
+            const totalCaloriesChange = weightDiff * 7700;
+            const dailyAdjustment = totalCaloriesChange / (months * 30);
+
+            let newGoalCalories = tdee;
+
+            if (goalWeight < startingWeight) {
+                newGoalCalories = tdee - dailyAdjustment;
+            } else if (goalWeight > startingWeight) {
+                newGoalCalories = tdee + dailyAdjustment;
+            }
+
+            const roundedCalories = Math.max(0, Math.round(newGoalCalories));
+            calorieGoalDisplay.textContent = roundedCalories;
+        }
+
+        goalWeightInput.addEventListener("input", updateCalories);
+        timelineSlider.addEventListener("input", updateCalories);
+
+        updateCalories(); // Initial
+    </script>
+}

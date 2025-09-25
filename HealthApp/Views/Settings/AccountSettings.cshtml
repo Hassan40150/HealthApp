@@ -1,0 +1,84 @@
+﻿@model HealthApp.ViewModels.Settings.AccountSettingsViewModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" />
+}
+
+<div class="profile">
+    <div class="onboarding-top-section">
+        <div class="onboarding-back">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+        </div>
+
+        <div>
+            <h1>Account Settings</h1> <!-- Fixed title -->
+        </div>
+
+        <div>
+        </div>
+    </div>
+</div>
+
+<form asp-action="AccountSettings" method="post">
+    <!-- Fixed form action -->
+    <validation-summary model-only="true" class="text-danger"></validation-summary> <!-- Optional but good -->
+
+    <div>
+        <label asp-for="Username"></label>
+        <input asp-for="Username" />
+        <span asp-validation-for="Username" style="color:red"></span>
+    </div>
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" style="color:red"></span>
+    </div>
+
+    <hr />
+        <hr />
+    <hr />
+    <hr />
+
+    <h4>Change Password</h4>
+
+    <div>
+        <label asp-for="CurrentPassword"></label>
+        <input asp-for="CurrentPassword" type="password" />
+        <span asp-validation-for="CurrentPassword" style="color:red"></span>
+    </div>
+
+    <div>
+        <label asp-for="NewPassword"></label>
+        <input asp-for="NewPassword" type="password" />
+        <span asp-validation-for="NewPassword" style="color:red"></span>
+    </div>
+
+    <div>
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" type="password" />
+        <span asp-validation-for="ConfirmPassword" style="color:red"></span>
+    </div>
+
+    <validation-summary model-only="true" class="text-danger"></validation-summary>
+
+
+    <hr />
+
+    <div>
+        <label>
+            <input asp-for="ConfirmDelete" type="checkbox" />
+            Confirm account deletion
+        </label>
+    </div>
+
+    <br />
+
+    <button type="submit">Save Changes</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

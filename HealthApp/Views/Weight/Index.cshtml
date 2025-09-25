@@ -1,0 +1,94 @@
+﻿@model HealthApp.ViewModels.WeightViewModel
+
+
+<!-- Range Selector -->
+<label for="rangeSlider">Select Time Range:</label>
+<input type="range"
+       id="rangeSlider"
+       name="rangeSlider"
+       min="0"
+       max="5"
+       step="1"
+       value="@((int)Model.SelectedRange)" />
+<div id="rangeLabel" class="fw-bold"></div>
+
+<br />
+<br />
+
+<!-- Raw Data Output -->
+<h2>Starting Weight: <span id="StartingWeight">@Model.StartingWeight kg</span></h2>
+<h2>Goal Weight: <span id="GoalWeight">@Model.GoalWeight kg</span></h2>
+<h2>Days Since Start: <span id="DaysSinceStart">@Model.DaysSinceStart days</span></h2>
+
+<h2>Current Weight: <span id="CurrentWeight">@Model.CurrentWeight kg</span></h2>
+<h2>Progress Percentage: <span id="ProgressPercentage">@Model.ProgressPercentage%</span></h2>
+<h2>Kg Remaining to Goal: <span id="KgRemainingToGoal">@Model.KgRemainingToGoal kg</span></h2>
+
+<h2>Heaviest Weight: <span id="HeaviestWeight">@Model.HeaviestWeight kg</span></h2>
+<h2>Lightest Weight: <span id="LightestWeight">@Model.LightestWeight kg</span></h2>
+<h2>Average Weight: <span id="AverageWeight">@Model.AverageWeight kg</span></h2>
+<h2>Weight Change: <span id="WeightChange">@Model.WeightChange kg</span></h2>
+
+<h2>Entries Logged: <span id="EntriesLogged">@Model.EntriesLogged / @Model.TotalDaysInRange days</span></h2>
+
+<h2>Estimated Days to Goal: <span id="EstimatedDaysToGoal">@Model.EstimatedDaysToGoal days</span></h2>
+<h2>BMI Change (Start to Now): <span id="BmiChange">@Model.BmiChange</span></h2>
+<h2>Weight Fluctuation: <span id="WeightFluctuation">@Model.WeightFluctuation kg</span></h2>
+<h2>Last Log Date: <span id="LastLogDate">@Model.LastLogDate</span></h2>
+
+<script>
+    const rangeOptions = [
+        '1 Week',
+        '2 Weeks',
+        '3 Months',
+        '6 Months',
+        '12 Months',
+        '24 Months'
+    ];
+
+    function updateRangeLabel(val) {
+        document.getElementById('rangeLabel').innerText = rangeOptions[val];
+    }
+
+    async function reloadData(val) {
+        try {
+            const response = await fetch(`/weight/getdata?range=${val}`);
+            const data = await response.json();
+
+            document.getElementById('StartingWeight').innerText = data.startingWeight + ' kg';
+            document.getElementById('GoalWeight').innerText = data.goalWeight + ' kg';
+            document.getElementById('DaysSinceStart').innerText = data.daysSinceStart + ' days';
+
+            document.getElementById('CurrentWeight').innerText = data.currentWeight + ' kg';
+            document.getElementById('ProgressPercentage').innerText = data.progressPercentage + '%';
+            document.getElementById('KgRemainingToGoal').innerText = data.kgRemainingToGoal + ' kg';
+
+            document.getElementById('HeaviestWeight').innerText = data.heaviestWeight + ' kg';
+            document.getElementById('LightestWeight').innerText = data.lightestWeight + ' kg';
+            document.getElementById('AverageWeight').innerText = data.averageWeight + ' kg';
+            document.getElementById('WeightChange').innerText = data.weightChange + ' kg';
+
+            document.getElementById('EntriesLogged').innerText = data.entriesLogged + ' / ' + data.totalDaysInRange + ' days';
+
+            document.getElementById('EstimatedDaysToGoal').innerText = data.estimatedDaysToGoal + ' days';
+            document.getElementById('BmiChange').innerText = data.bmiChange;
+            document.getElementById('WeightFluctuation').innerText = data.weightFluctuation + ' kg';
+            document.getElementById('LastLogDate').innerText = data.lastLogDate;
+
+        } catch (error) {
+            console.error('Error fetching weight data:', error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateRangeLabel(document.getElementById('rangeSlider').value);
+
+        document.getElementById('rangeSlider').addEventListener('input', function () {
+            updateRangeLabel(this.value);
+        });
+
+        document.getElementById('rangeSlider').addEventListener('change', function () {
+            reloadData(this.value);
+        });
+    });
+</script>

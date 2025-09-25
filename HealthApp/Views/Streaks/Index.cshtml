@@ -1,0 +1,25 @@
+﻿@model HealthApp.ViewModels.StreaksViewModel
+
+@{
+    ViewData["Title"] = "Streaks";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.CurrentStreakLength > 0)
+{
+    <h2>Current Streak: @Model.CurrentStreakLength days</h2>
+    <h2>Current Streak Started On: @Model.CurrentStreakStartDate?.ToString("yyyy-MM-dd")</h2>
+}
+else
+{
+    <h2>No active streak right now</h2>
+}
+
+<hr />
+
+<h2>Longest Streak: @Model.LongestStreakLength days</h2>
+@if (Model.LongestStreakStartDate != null && Model.LongestStreakEndDate != null)
+{
+    <h2>Longest Streak Period: @Model.LongestStreakStartDate?.ToString("yyyy-MM-dd") to @Model.LongestStreakEndDate?.ToString("yyyy-MM-dd")</h2>
+}

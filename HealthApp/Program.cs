@@ -1,4 +1,5 @@
 using System.Configuration;
+using HealthApp.Services;
 using Microsoft.Extensions.Options;
 
 
@@ -27,6 +28,20 @@ builder.Services.AddAuthentication("MyCookieAuth")
     });
 
 builder.Services.AddAuthorization();
+
+
+
+// Add services
+builder.Services.AddScoped<OnboardingService>();
+builder.Services.AddScoped<CheckInService>();
+builder.Services.AddScoped<StreaksService>();
+builder.Services.AddScoped<SettingsService>();
+builder.Services.AddScoped<WeightService>();
+builder.Services.AddScoped<CaloriesService>();
+builder.Services.AddScoped<WaterService>();
+builder.Services.AddScoped<JournalService>();
+
+
 
 
 
