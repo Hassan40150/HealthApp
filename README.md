@@ -57,17 +57,51 @@ This project was developed as a Final Year Project and as a practical exploratio
 
 ## Features
 
-- Secure user registration and login
-- Cookie-based authentication with Claims Identity
-- Onboarding flow for personalised health goals
-- Daily calorie, water, and weight logging
-- Dynamic streak tracking with automatic correction
-- Progress dashboard with real-time summaries
-- Journal entries with timestamped history
-- Settings page for updating goals and profile data
-- Responsive design (desktop and mobile)
-- Mobile deployment via .NET MAUI WebView
-- Input validation and data integrity safeguards
+- User registration with secure password hashing  
+- Secure login using cookie-based authentication  
+- Unique email validation during registration  
+- Session management using Claims Identity  
+
+- Guided onboarding with personalised:
+  - Weight goals
+  - Calorie goals
+  - Water intake goals  
+
+- Daily Check-In system with:
+  - Calorie logging
+  - Water intake logging
+  - Weight logging  
+  - Validation for invalid or missing data  
+
+- Dynamic streak tracking system:
+  - Automatic streak progression when goals are met
+  - Automatic streak reset if daily goals are not met  
+
+- Personalised dashboard displaying:
+  - Daily calorie goal progress
+  - Daily water intake goal progress
+  - Weight trend monitoring
+  - Streak status and summaries for user feedback  
+
+- Journal functionality:
+  - Daily journal entry submission
+  - Viewing past journal entries  
+
+- Settings page for updating:
+  - User profile information
+  - Health goals and targets  
+
+- Responsive design for desktop and mobile  
+- Dark mode support  
+- Bootstrap-based UI styling  
+- Font Awesome icon integration  
+
+- Mobile deployment via .NET MAUI WebView  
+- MySQL database for persistent storage  
+- Entity Framework Core ORM integration  
+- Manual input sanitisation for security  
+- Version control using GitHub with branching workflow  
+- UI/UX designed and prototyped in Figma  
 
 ---
 
